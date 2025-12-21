@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Gemini {
+public class MosaicGADynamic {
 
     // --- VARIABEL GLOBAL DINAMIS ---
     static int ROWS;

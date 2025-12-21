@@ -1,31 +1,30 @@
 package Mosaic;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 /* TODO : 
-    - bikin setter buat map dimana map adalah array 2d yang merepresentasikan warna (0 = white cell, 1 = black cell) 
+    
 */
 
-public class Individual {
-    int n;
-    public int[] chromosome; // map warna dengan bit, 1 = kotak hitam, 0 = kotak putih
-    public int fitness;
+public class Individual implements Comparable<Individual> {
+    static int n;
+    public Chromosome chromosome; // map warna dengan bit, 1 = kotak hitam, 0 = kotak putih
+    public double fitness;
     public Random MyRand; // random generator dikirim dari luar untuk membuat invididu acak
     public double parentProbability; // probabilitas individu ini terpilih sbg parent
     static int[][] map;
+    static List<Coordinate> numberLocation;
 
-    // static final int[][] direction = {
-    // {-1,-1},{-1,0},{-1,1},
-    // {0,-1}, {0,0}, {0,1},
-    // {1,-1},{1,0},{1,1}
-    // };
+    private static final int FILLED = 1;
+    private static final int EMPTY = 0;
 
     // membuat individu acak
     public Individual(Random MyRand) {
         this.MyRand = MyRand;
         // this.banyakFireStation = banyakFireStation;
-        // this.chromosome = generateRandomCoordinates();
+        this.chromosome = generateRandomChromosome();
 
         // System.out.println("=================");
         // for(int i = 0; i < chromosome.length; i++){
@@ -34,7 +33,15 @@ public class Individual {
 
         // this.fitness = setFitness(chromosome);
         this.parentProbability = 0;
+    }
 
+    // membuat individu baru berdasarkan kromosom dari luar
+    public Individual(Random MyRand, Chromosome chromosome) {
+        this.MyRand = MyRand;
+        this.chromosome = chromosome;
+        // this.numberLocation = numberLocation;
+        this.setFitness();
+        this.parentProbability = 0;
     }
 
     static boolean isValid(int row, int col) {
@@ -45,10 +52,10 @@ public class Individual {
     // https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
     // mengambil index dari chromosome yang dimapping dari array 2d
     public int getCell(int row, int col) {
-        return chromosome[row * n + col];
+        return chromosome.getCell(row, col, n);
     }
 
-    public double setFitness(List<Coordinate> numberLocation, int n) {
+    public void setFitness() {
         int totalError = 0;
         for (Coordinate c : numberLocation) {
             int x = c.getX();
@@ -59,8 +66,7 @@ public class Individual {
 
             totalError += Math.abs(blackCtn - value);
         }
-
-        return 1.0 / (1 + totalError);
+        this.fitness = 1.0 / (1 + totalError);
     }
 
     public int countBlackCell(int x, int y) {
@@ -73,12 +79,49 @@ public class Individual {
         return count;
     }
 
-
-    public int[] generateRandomChromosome() {
-        int[] randomChromosome = new int[n * n];
-        for (int i = 0; i < n * n; i++) {
-            randomChromosome[i] = MyRand.nextInt(2);
-        }
+    public Chromosome generateRandomChromosome() {
+        Chromosome randomChromosome = new Chromosome(MyRand);
+        randomChromosome.generateRandom(n);
         return randomChromosome;
+    }
+
+    // single point crossover
+    public Individual[] doCrossover(Individual other) {
+        //
+        Chromosome[] child = this.chromosome.doCrossover(other.chromosome);
+
+        // Buat objek Individual dengan kromosom baru
+        Individual child1 = new Individual(this.MyRand, child[0]);
+        Individual child2 = new Individual(this.MyRand, child[1]);
+
+        return new Individual[] { child1, child2 };
+    }
+
+    public static void setMap(int[][] map){
+        Individual.map = map;
+        Individual.n = map.length;
+    }
+
+    public static void setNumberLocation(List<Coordinate> numberLocation){
+        Individual.numberLocation = numberLocation;
+    }
+
+    public void doMutation(){
+        this.chromosome.doMutation();
+    }
+
+    @Override
+    public int compareTo(Individual other) {
+        if (this.fitness > other.fitness)
+            return -1;
+        else if (this.fitness < other.fitness)
+            return 1;
+        else
+            return 0;
+    }
+
+    @Override
+    public String toString() {
+        return this.chromosome.toString();
     }
 }
