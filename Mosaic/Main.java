@@ -87,6 +87,7 @@ public class Main {
                 bestState = current;
             }
         }
+        System.out.println();
         System.out.println("Best Fitness: " + bestState.fitness);
         System.out.println(bestState);
 
@@ -94,9 +95,9 @@ public class Main {
 }
 
 /*
- * 0 1 0 1 1
+ * 1 0 1 0 0
+ * 1 0 0 0 1
+ * 1 0 1 1 1
  * 0 1 1 1 0
- * 0 1 0 0 0
- * 1 0 0 0 1
- * 1 0 0 0 1
+ * 0 1 1 1 0
  */

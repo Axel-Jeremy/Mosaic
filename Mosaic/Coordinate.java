@@ -34,4 +34,18 @@ public class Coordinate {
     public void setValue(int value) {
         this.value = value;
     }
+
+    public int findSumNeighbor(int n) {
+        n--;
+        if (this.x == 0 || this.x == n) 
+            if (this.y == 0 || this.y == n)
+                return 4;
+            else 
+                return 6;
+        else 
+            if (this.y == 0 || this.y == n)
+                return 6;
+            else
+            return 9;
+    }
 }

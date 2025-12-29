@@ -1,6 +1,7 @@
 package Mosaic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -23,7 +24,6 @@ public class Individual implements Comparable<Individual> {
     // membuat individu acak
     public Individual(Random MyRand) {
         this.MyRand = MyRand;
-        // this.banyakFireStation = banyakFireStation;
         this.chromosome = generateRandomChromosome();
 
         // System.out.println("=================");
@@ -56,18 +56,53 @@ public class Individual implements Comparable<Individual> {
     }
 
     public void setFitness() {
+        // ================================================================
+        // eksperimen fitness pertama, menghitung banyak kotak yang salah
+        // ================================================================
+        // int totalError = 0;
+        // for (Coordinate c : numberLocation) {
+        // int x = c.getX();
+        // int y = c.getY();
+        // int value = c.getValue();
+
+        // int blackCtn = countBlackCell(x, y);
+
+        // totalError += Math.abs(blackCtn - value);
+        // }
+        // this.fitness = 1.0 / (1 + totalError);
+
+        // ================================================================
+        // eksperimen fitness 2,
+        // ================================================================
         int totalError = 0;
+        int correctClues = 0;
+        // int maxBlack = 9;
+
         for (Coordinate c : numberLocation) {
-            int x = c.getX();
-            int y = c.getY();
-            int value = c.getValue();
-
-            int blackCtn = countBlackCell(x, y);
-
-            totalError += Math.abs(blackCtn - value);
+            int black = countBlackCell(c.getX(), c.getY());
+            int diff = Math.abs(black - c.getValue());
+            totalError += diff;
+            if (diff == 0) // itung banyak angka yang udah bener
+                correctClues++;
         }
-        this.fitness = 1.0 / (1 + totalError);
+
+        int maxPossibleError = 0;
+        for(Coordinate number : numberLocation){
+            maxPossibleError += number.findSumNeighbor(map.length) - number.getValue();
+        }
+
+        double errorScore = (double) totalError / maxPossibleError; //max valuenya 1
+
+        // Base fitness dari constraint (soft penalti)
+        double base = 1.0 - errorScore;
+
+        // Reward: makin banyak clue yang benar, makin naik
+        double reward = (double) correctClues / numberLocation.size(); //ini max valuenya juga 1
+
+        this.fitness = (base + reward) / 2.0;
     }
+
+    
 
     public int countBlackCell(int x, int y) {
         int count = 0;
@@ -88,7 +123,7 @@ public class Individual implements Comparable<Individual> {
     // single point crossover
     public Individual[] doCrossover(Individual other) {
         //
-        Chromosome[] child = this.chromosome.doCrossover(other.chromosome);
+        Chromosome[] child = this.chromosome.uniformCrossover(other.chromosome);
 
         // Buat objek Individual dengan kromosom baru
         Individual child1 = new Individual(this.MyRand, child[0]);
@@ -97,17 +132,24 @@ public class Individual implements Comparable<Individual> {
         return new Individual[] { child1, child2 };
     }
 
-    public static void setMap(int[][] map){
+    public static void setMap(int[][] map) {
         Individual.map = map;
         Individual.n = map.length;
     }
 
-    public static void setNumberLocation(List<Coordinate> numberLocation){
+    public static void setNumberLocation(List<Coordinate> numberLocation) {
         Individual.numberLocation = numberLocation;
     }
 
-    public void doMutation(){
+    public void doMutation() {
         this.chromosome.doMutation();
+    }
+
+    @Override
+    public Individual clone() {
+        Chromosome clonedChromosome = new Chromosome(this.MyRand);
+        clonedChromosome.setGene(Arrays.copyOf(this.chromosome.getGene(), this.chromosome.getGene().length));
+        return new Individual(this.MyRand, clonedChromosome);
     }
 
     @Override

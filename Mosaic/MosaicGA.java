@@ -39,8 +39,7 @@ public MosaicGA(Random MyRand, int n, int totalGeneration, int maxPopulationSize
             while (newPop.isFilled() == false) { // selain elitism, sisanya diisi dengan crossover
                 Individual[] parents = currentPop.selectParents(); // pilih parent
                 if (this.MyRand.nextDouble() < this.crossoverRate) { // apakah terjadi kawin silang?
-                    Individual[] child = parents[0].doCrossover(parents[1]); // jika ya, crossover kedua parent untuk
-                                                                             // mendapatkan satu anak
+                    Individual[] child = parents[0].doCrossover(parents[1]); // jika ya, crossover kedua parent
                     for (int i = 0; i < child.length; i++) {
                         if (this.MyRand.nextDouble() < this.mutationRate) { // apakah terjadi mutasi?
                             child[i].doMutation();
