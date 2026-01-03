@@ -106,9 +106,11 @@ public class Individual implements Comparable<Individual> {
 
     public int countBlackCell(int x, int y) {
         int count = 0;
-        for (int i = x - 1; i < x + 2 && i < n && i >= 0; i++) {
-            for (int j = y - 1; j < y + 2 && j < n && j >= 0; j++) {
-                count += getCell(i, j);
+        for (int i = x - 1; i < x + 2; i++) {
+            for (int j = y - 1; j < y + 2; j++) {
+                if (i >= 0 && i < n && j >= 0 && j < n) {
+                    count += getCell(i, j);
+                }
             }
         }
         return count;
@@ -142,7 +144,7 @@ public class Individual implements Comparable<Individual> {
     }
 
     public void doMutation() {
-        this.chromosome.doMutation();
+        this.chromosome.doMutation(0.5);
     }
 
     @Override

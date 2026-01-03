@@ -36,28 +36,34 @@ public class Chromosome {
     }
 
     // melakukan mutasi dengan metode flip bit
-    public void doMutation() {
+    public void doMutation(double probability) {
         // ==========================================
         // mutasi flip bit semua index
         // ==========================================
-        // for (int i = 0; i < this.gene.length; i++) {
-        // this.gene[i] = this.gene[i] == 0 ? 1:0;
+//         for (int i = 0; i < this.gene.length; i++) {
+//         this.gene[i] = this.gene[i] == 0 ? 1:0;
         // =========================================
 
         // ==========================================
         // mutasi flip bit 1 index random saja
         // ==========================================
-        int idx = MyRand.nextInt(gene.length);
-        int idxArr[] = new int[idx];
-
-        for (int index : idxArr) {
-            index = MyRand.nextInt(gene.length);
-        }
-        this.gene[idx] = this.gene[idx] == 0 ? 1 : 0;
+//        int idx = MyRand.nextInt(gene.length);
+//        int idxArr[] = new int[idx];
+//
+//        for (int index : idxArr) {
+//            index = MyRand.nextInt(gene.length);
+//        }
+//        this.gene[idx] = this.gene[idx] == 0 ? 1 : 0;
 
         // ==========================================
         // mutasi Probabilistic
         // ==========================================
+
+        for (int i = 0; i < this.gene.length; i++) {
+            if (MyRand.nextDouble() < probability) {
+                this.gene[i] = (this.gene[i] == 0) ? 1 : 0;
+            }
+        }
     }
 
     // public void doMutation(double mutationRate) {
