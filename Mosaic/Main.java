@@ -21,7 +21,7 @@ public class Main {
         // Try Catch untuk input File dan error prevention jika tidak ada file yang
         // cocok
         try {
-            sc = new Scanner(new File("Mosaic/input.txt")); // ambil file dengan nama "input.txt"
+            sc = new Scanner(new File("Mosaic/inputlarge.txt")); // ambil file dengan nama "input.txt"
             n = sc.nextInt();
             int[][] mosaic = new int[n][n];
 
@@ -80,16 +80,31 @@ public class Main {
             MosaicGA mosaicGA = new MosaicGA(gen, n, totalGeneration, maxPopulationSize, elitismPct,
                     crossoverRate, mutationRate);
             Individual current = mosaicGA.run();
-            System.out.println("Current Fitness: " + current.fitness);
+            System.out.printf("Current Fitness:  %.5f\n", current.fitness);
             // System.out.println(best);
             if (current.fitness > bestFitness) {
                 bestFitness = current.fitness;
                 bestState = current;
             }
         }
-        System.out.println();
-        System.out.println("Best Fitness: " + bestState.fitness);
-        System.out.println(bestState);
+        System.out.println("\n========================================");
+        System.out.println("Seed: " + seed);
+        System.out.printf("Best Fitness: %.5f\n", bestState.fitness);
+        System.out.println("========================================\n");
+
+        System.out.println("=========== HASIL BEST STATE ===========");
+
+        System.out.print(bestState);
+
+        System.out.println("========================================");
+
+        if (bestState.fitness < 1) {
+            bestState.printSavedErrors();
+        }
+        else{
+        System.out.println("========== 100% Jawaban Benar ==========");
+        System.out.println("========================================");
+        }
 
     }
 }

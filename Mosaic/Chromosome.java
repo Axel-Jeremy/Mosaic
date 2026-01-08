@@ -2,31 +2,68 @@ package Mosaic;
 
 import java.util.Random;
 
+/**
+ * Class Chromosome mempresentasikan struktur awal dari algo GA yang
+ * mempresentasikan grid 2 dimensi
+ * yang setiap gen nya akan bernilai 1 jika dia merupakan kotak hitam dan 0 jika
+ * putih/kosong
+ * 
+ * Sumber: ...
+ * 
+ * @author Axel, Davin, Keane
+ * 
+ */
 public class Chromosome {
     private int[] gene;
-    public Random MyRand; // random generator dikirim dari luar untuk membuat invididu acak
+    public Random MyRand; // random generator
     private static final int FILLED = 1; // penanda grid ditandai kotak hitam
     private static final int EMPTY = 0; // penanda grid ditandai kotak putih
-    private static final int BOUND = 2; // bound untuk random
+    private static final int BOUND = 2; // batas untuk random
 
+    /**
+     * Konstraktor untuk chromosome
+     * 
+     * @param MyRand Generator untuk angka acak
+     */
     public Chromosome(Random MyRand) {
         // this.gene = gene;
         this.MyRand = MyRand;
     }
 
-    // ambil suatu cell dari chromosome
+    /**
+     * ambil nilai gen pada grid(baris, kolom) tertentu dan di mapping dari koordinat 2D ke array 1D
+     *
+     * @param x Baris
+     * @param y Kolom
+     * @param n Ukuran sisi grid
+     * @return Nilai gen (1 atau 0)
+     */
     public int getCell(int x, int y, int n) {
         return gene[x * n + y];
     }
 
+    /**
+     * ambil seluruh array gene
+     * 
+     * @return Array integer gene
+     */
     public int[] getGene() {
         return gene;
     }
 
+    /**
+     * mengatur seluruh nilai gene
+     * 
+     * @param gene Array integer gene baru
+     */
     public void setGene(int[] gene) {
         this.gene = gene;
     }
 
+    /**
+     * method untuk generate random yang berfungsi mengisi gene awal dengan acak
+     * digunakan hanya pada generasi pertama
+     */
     public void generateRandom(int n) {
         this.gene = new int[n * n];
         for (int i = 0; i < n * n; i++) {
@@ -35,30 +72,40 @@ public class Chromosome {
         }
     }
 
-    // melakukan mutasi dengan metode flip bit
+    /**
+     * mutasi genetik dengan flip bit yang terpilih, dimana setiap gen memiliki probability
+     * untuk bermutasi (flip), ada beberapa teknik dalam melakuakn flip bit
+     * 1. Semua bit di ubah
+     * 2. 1 Index random saja
+     * 3. Probabilistic
+     *
+     * @param probability Nilai mutasi
+     */
     public void doMutation(double probability) {
+
         // ==========================================
         // mutasi flip bit semua index
         // ==========================================
-//         for (int i = 0; i < this.gene.length; i++) {
-//         this.gene[i] = this.gene[i] == 0 ? 1:0;
-        // =========================================
+        // for (int i = 0; i < this.gene.length; i++) {
+        // this.gene[i] = this.gene[i] == 0 ? 1:0;
+
 
         // ==========================================
         // mutasi flip bit 1 index random saja
         // ==========================================
-//        int idx = MyRand.nextInt(gene.length);
-//        int idxArr[] = new int[idx];
-//
-//        for (int index : idxArr) {
-//            index = MyRand.nextInt(gene.length);
-//        }
-//        this.gene[idx] = this.gene[idx] == 0 ? 1 : 0;
+        // int idx = MyRand.nextInt(gene.length);
+        // int idxArr[] = new int[idx];
+        //
+        // for (int index : idxArr) {
+        // index = MyRand.nextInt(gene.length);
+        // }
+        // this.gene[idx] = this.gene[idx] == 0 ? 1 : 0;
+
 
         // ==========================================
         // mutasi Probabilistic
         // ==========================================
-
+        // jika angka acak kurang dari rate mutasi, lakukan flip
         for (int i = 0; i < this.gene.length; i++) {
             if (MyRand.nextDouble() < probability) {
                 this.gene[i] = (this.gene[i] == 0) ? 1 : 0;
@@ -74,7 +121,13 @@ public class Chromosome {
     // }
     // }
 
-    //uniform crossover
+    /**
+     * Melakukan Uniform Crossover
+     * Setiap gen anak akan dipilih secara acak dari salah satu orang tua
+     *
+     * @param other Parent kedua (pasangan)
+     * @return Array berisi 2 Chromosome anak
+     */
     public Chromosome[] uniformCrossover(Chromosome other) {
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
@@ -84,7 +137,9 @@ public class Chromosome {
         int[] otherGene = other.getGene();
 
         for (int i = 0; i < this.gene.length; i++) {
+            // Acak pengambilan gen untuk Anak 1
             child1Gene[i] = MyRand.nextBoolean() ? this.gene[i] : other.gene[i];
+            // Acak pengambilan gen untuk Anak 2
             child2Gene[i] = MyRand.nextBoolean() ? other.gene[i] : this.gene[i];
         }
 
@@ -94,7 +149,13 @@ public class Chromosome {
         return new Chromosome[] { child1, child2 };
     }
 
-    // single point (sementara)
+    /**
+     * Melakukan Single Point Crossover
+     * Memotong kromosom di satu titik acak, lalu menukar bagian ekornya
+     *
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
     public Chromosome[] singlePointCrossover(Chromosome other) {
         // Tentukan titik potong
         // int potongan = this.gene.length / 2;
@@ -128,8 +189,14 @@ public class Chromosome {
         return new Chromosome[] { child1, child2 };
     }
 
-    // Two Point Crossover
-    public Chromosome[] twoPointCrossover(Chromosome other){
+    /**
+     * Melakukan Two Point Crossover dengan memilih dua titik potong,
+     * lalu menukar segmen di antara kedua titik tersebut
+     *
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] twoPointCrossover(Chromosome other) {
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
 
@@ -137,12 +204,14 @@ public class Chromosome {
         int[] child2Gene = new int[this.gene.length];
         int[] otherGene = other.getGene();
 
+        // tentukan titik potong 1 dan 2
         int point1 = MyRand.nextInt(this.gene.length);
         int point2 = MyRand.nextInt(this.gene.length);
 
-        int start = Math.min(point1,point2);
-        int end = Math.max(point1,point2);
-        
+        // Buat agar titik potong start lebih kecil dari end
+        int start = Math.min(point1, point2);
+        int end = Math.max(point1, point2);
+
         for (int i = 0; i < this.gene.length; i++) {
             // kalau ada di luar titik potong, pertahankan seperti awal
             if (i < start || i > end) {
@@ -165,6 +234,12 @@ public class Chromosome {
         return new Chromosome[] { child1, child2 };
     }
 
+    /**
+     * Representasi String dari Chromosome untuk visualisasi
+     * Mengubah 1 menjadi "B" (Black) dan 0 menjadi "W" (White)
+     *
+     * @return String grid puzzle
+     */
     @Override
     public String toString() {
         String res = "";
@@ -172,8 +247,12 @@ public class Chromosome {
         int length = (int) Math.sqrt(gene.length);
         // System.out.println(gene.length);
         for (int i = 0; i < gene.length; i++) {
-            res += gene[i] + " ";
+            if (gene[i] == 1)
+                res += "B ";
+            else
+                res += "W ";
             count++;
+            // Ganti baris setiap mencapai lebar grid
             if (count == length) {
                 count = 0;
                 res += "\n";
