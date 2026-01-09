@@ -1,8 +1,9 @@
 package Mosaic;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
-
+import java.util.Collections;
 /**
  * Class Chromosome mempresentasikan struktur awal dari algo GA yang
  * mempresentasikan grid 2 dimensi
@@ -137,38 +138,69 @@ public class Chromosome {
         // ==========================================
         // mutasi cek expected sama actual
         // ==========================================
-
         int k = 0;
+
+        // Loop untuk seluruh kondisi angka
         for (Coordinate c : numberLocation) {
-            // Cek nilai angka nya sama dengan kondisi sekarang atau tidak
+
+            // Jika ada selisih maka jalankan
             if (c.getValue() != actual[k]) {
                 int selisih = Math.abs(c.getValue() - actual[k]);
                 int x = c.getX();
                 int y = c.getY();
                 int count = 0;
 
-                // Loop untuk area 3*3 sekitar area angka
+                List<Integer[]> indexes = new ArrayList<>();
+
+                // loop 3*3 untuk mengecek kotak hitam sekitar yang tidak keluar dari grid
                 for (int i = x - 1; i < x + 2; i++) {
                     for (int j = y - 1; j < y + 2; j++) {
-                        // pastikan koordinat tidak keluar dari grid yang ada
+                        // memastikan tetap valid (tidak keluar dari grid)
                         if (i >= 0 && i < n && j >= 0 && j < n) {
-                            if(c.getValue() > actual[k]){
-                                if(getCell(i, j, n) == 0){
-                                    flipCell(i, j, n);
-                                    count++;
-                                }
-                            }
-                            // Jika kelebihan kotak hitam ubah jadi putih
-                            else if(c.getValue() < actual[k]){
-                                if(getCell(i, j, n) == 1) {
-                                    flipCell(i, j, n);
-                                    count++;
-                                }
-                            }
+                            indexes.add(new Integer[] { i, j });
+
+                            // if(c.getValue() > actual[k]){
+                            // if(getCell(i, j, n) == 0){
+                            // flipCell(i, j, n);
+                            // count++;
+                            // }
+                            // }
+                            // else if(c.getValue() < actual[k]){
+                            // if(getCell(i, j, n) == 1) {
+                            // flipCell(i, j, n);
+                            // count++;
+                            // }
+                            // }
                         }
-                        // Jika jumlah sudah sama dengan selisih, berhenti loop
-                        if(count == selisih) break;
+
+                        // if(count == selisih) break;
                     }
+                }
+
+                // acak index
+                Collections.shuffle(indexes);
+
+                // benerin kotak yang salah
+                for (Integer[] index : indexes) {
+                    // item lebih banyak dari aslinya, 
+                    if (c.getValue() > actual[k]) {
+                        if (getCell(index[0], index[1], n) == 0) {
+                            //tuker kotak item jadi putih
+                            flipCell(index[0], index[1], n);
+                            count++;
+                        }
+                    } 
+                    // Kalau kotak putih lebih banyak
+                    else if (c.getValue() < actual[k]) {
+                        if (getCell(index[0], index[1], n) == 1) {
+                            // puter jadi kotak item
+                            flipCell(index[0], index[1], n);
+                            count++;
+                        }
+                    }
+                    // kalau udh sama kek sleisih, berenti
+                    if (count == selisih)
+                        break;
                 }
             }
             k++;
