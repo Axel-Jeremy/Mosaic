@@ -1,5 +1,6 @@
 package Mosaic;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -31,7 +32,8 @@ public class Chromosome {
     }
 
     /**
-     * ambil nilai gen pada grid(baris, kolom) tertentu dan di mapping dari koordinat 2D ke array 1D
+     * ambil nilai gen pada grid(baris, kolom) tertentu dan di mapping dari
+     * koordinat 2D ke array 1D
      *
      * @param x Baris
      * @param y Kolom
@@ -40,6 +42,10 @@ public class Chromosome {
      */
     public int getCell(int x, int y, int n) {
         return gene[x * n + y];
+    }
+
+    public void flipCell(int x, int y, int n) {
+        gene[x * n + y] = gene[x * n + y] == 0 ? 1 : 0;
     }
 
     /**
@@ -73,7 +79,8 @@ public class Chromosome {
     }
 
     /**
-     * mutasi genetik dengan flip bit yang terpilih, dimana setiap gen memiliki probability
+     * mutasi genetik dengan flip bit yang terpilih, dimana setiap gen memiliki
+     * probability
      * untuk bermutasi (flip), ada beberapa teknik dalam melakuakn flip bit
      * 1. Semua bit di ubah
      * 2. 1 Index random saja
@@ -89,7 +96,6 @@ public class Chromosome {
         // for (int i = 0; i < this.gene.length; i++) {
         // this.gene[i] = this.gene[i] == 0 ? 1:0;
 
-
         // ==========================================
         // mutasi flip bit 1 index random saja
         // ==========================================
@@ -100,7 +106,6 @@ public class Chromosome {
         // index = MyRand.nextInt(gene.length);
         // }
         // this.gene[idx] = this.gene[idx] == 0 ? 1 : 0;
-
 
         // ==========================================
         // mutasi Probabilistic
@@ -113,13 +118,42 @@ public class Chromosome {
         }
     }
 
-    // public void doMutation(double mutationRate) {
-    // for (int i = 0; i < this.gene.length; i++) {
-    // if (MyRand.nextDouble() < mutationRate) {
-    // this.gene[i] = (this.gene[i] == 0) ? 1 : 0; // Flip bit
-    // }
-    // }
-    // }
+    public void doMutation(List<Coordinate> numberLocation, int[] actual, int n) {
+        // ==========================================
+        // mutasi cek expected sama actual
+        // ==========================================
+
+        int k = 0;
+        for (Coordinate c : numberLocation) {
+            if (c.getValue() != actual[k]) {
+                int selisih = Math.abs(c.getValue() - actual[k]);
+                int x = c.getX();
+                int y = c.getY();
+                int count = 0;
+                for (int i = x - 1; i < x + 2; i++) {
+                    for (int j = y - 1; j < y + 2; j++) {
+                        if (i >= 0 && i < n && j >= 0 && j < n) {
+                            if(c.getValue() > actual[k]){
+                                if(getCell(i, j, n) == 0){
+                                    flipCell(i, j, n);
+                                    count++;
+                                }
+                            }
+                            else if(c.getValue() < actual[k]){
+                                if(getCell(i, j, n) == 1) {
+                                    flipCell(i, j, n);
+                                    count++;
+                                }
+                            }
+                        }
+
+                        if(count == selisih) break;
+                    }
+                }
+            }
+            k++;
+        }
+    }
 
     /**
      * Melakukan Uniform Crossover

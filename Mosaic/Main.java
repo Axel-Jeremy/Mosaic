@@ -21,7 +21,7 @@ public class Main {
         // Try Catch untuk input File dan error prevention jika tidak ada file yang
         // cocok
         try {
-            sc = new Scanner(new File("Mosaic/inputlarge.txt")); // ambil file dengan nama "input.txt"
+            sc = new Scanner(new File("Mosaic/20-Hard.txt")); // ambil file dengan nama "input.txt"
             n = sc.nextInt();
             int[][] mosaic = new int[n][n];
 

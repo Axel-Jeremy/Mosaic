@@ -238,7 +238,8 @@ public class Individual implements Comparable<Individual> {
      * melakukan mutasi pada kromosom di individu dengan rate mutasi sesuai input
      */
     public void doMutation() {
-        this.chromosome.doMutation(0.5);
+        // this.chromosome.doMutation(0.5);
+        this.chromosome.doMutation(numberLocation, actualValues, n);
     }
 
     /**
