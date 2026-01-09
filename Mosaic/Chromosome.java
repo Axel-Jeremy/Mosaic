@@ -1,8 +1,9 @@
 package Mosaic;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
-
+import java.util.Collections;
 /**
  * Class Chromosome mempresentasikan struktur awal dari algo GA yang
  * mempresentasikan grid 2 dimensi
@@ -159,13 +160,13 @@ public class Chromosome {
                 Collections.shuffle(indexes);
                 for (Integer[] index : indexes) {
                     if (c.getValue() > actual[k]) {
-                        if (getCell(i, j, n) == 0) {
-                            flipCell(i, j, n);
+                        if (getCell(index[0], index[1], n) == 0) {
+                            flipCell(index[0], index[1], n);
                             count++;
                         }
                     } else if (c.getValue() < actual[k]) {
-                        if (getCell(i, j, n) == 1) {
-                            flipCell(i, j, n);
+                        if (getCell(index[0], index[1], n) == 1) {
+                            flipCell(index[0], index[1], n);
                             count++;
                         }
                     }

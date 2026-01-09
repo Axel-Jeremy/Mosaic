@@ -56,7 +56,7 @@ public class Main {
         Random init = new Random(); // random generator untuk membuat seeds
         double bestFitness = Double.MIN_VALUE;
         Individual bestState = null;
-        long seed = init.nextLong() % 1000; // simpan seed sebagai seed untuk random generator
+        long seed = 67; // simpan seed sebagai seed untuk random generator
         Random gen = new Random(seed); // random generator untuk algogen-nya
 
         for (int ct = 1; ct <= loop; ct++) {
