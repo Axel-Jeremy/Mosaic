@@ -44,6 +44,13 @@ public class Chromosome {
         return gene[x * n + y];
     }
 
+    /**
+     * Membalik nilai sel pada koordinat tertentu (Flip Bit)
+     * Jika 0 menjadi 1 dan sebaliknya
+     * @param x Baris
+     * @param y Kolom
+     * @param n Ukuran sisi grid
+     */
     public void flipCell(int x, int y, int n) {
         gene[x * n + y] = gene[x * n + y] == 0 ? 1 : 0;
     }
@@ -118,6 +125,14 @@ public class Chromosome {
         }
     }
 
+    /**
+     * Melakukan mutasi untuk memperbaiki kromosom dengan membandingkan nilai pada angka dengan jumlah kotak hitam aktual.
+     * Jika tidak sesuai, maka akan membalik sel hitam di sekitar angka tersebut sampai sama dengan jumlah kotak hitam yang diharapkan
+     * 
+     * @param numberLocation Daftar koordinat angka pada puzzle
+     * @param actual Array yang berisi jumlah kotak hitam aktual di sekitar setiap clue
+     * @param n Ukuran sisi grid
+     */
     public void doMutation(List<Coordinate> numberLocation, int[] actual, int n) {
         // ==========================================
         // mutasi cek expected sama actual
@@ -125,13 +140,17 @@ public class Chromosome {
 
         int k = 0;
         for (Coordinate c : numberLocation) {
+            // Cek nilai angka nya sama dengan kondisi sekarang atau tidak
             if (c.getValue() != actual[k]) {
                 int selisih = Math.abs(c.getValue() - actual[k]);
                 int x = c.getX();
                 int y = c.getY();
                 int count = 0;
+
+                // Loop untuk area 3*3 sekitar area angka
                 for (int i = x - 1; i < x + 2; i++) {
                     for (int j = y - 1; j < y + 2; j++) {
+                        // pastikan koordinat tidak keluar dari grid yang ada
                         if (i >= 0 && i < n && j >= 0 && j < n) {
                             if(c.getValue() > actual[k]){
                                 if(getCell(i, j, n) == 0){
@@ -139,6 +158,7 @@ public class Chromosome {
                                     count++;
                                 }
                             }
+                            // Jika kelebihan kotak hitam ubah jadi putih
                             else if(c.getValue() < actual[k]){
                                 if(getCell(i, j, n) == 1) {
                                     flipCell(i, j, n);
@@ -146,7 +166,7 @@ public class Chromosome {
                                 }
                             }
                         }
-
+                        // Jika jumlah sudah sama dengan selisih, berhenti loop
                         if(count == selisih) break;
                     }
                 }

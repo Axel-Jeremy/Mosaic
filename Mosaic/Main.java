@@ -13,36 +13,60 @@ SbX SbY Value (misal : 2 1 0)
 SbX SbY Value (misal : 2 4 1)
 */
 
+
+/**
+ * Class main bertindak sebagai class utama untuk program Mosaic ini, Class main dimulai dari membaca file input
+ * yang berisi ukuran grid dan lokasi angka. Kemudian menginisialisasi data kedalam individu dan membaca parameter GA yang digunakan
+ * terkahir main akan menampilkan visualisasi berbasis CLI untuk solusi dan detail hasil apakah berhasil atau gagal
+ * 
+ * Sumber: ...
+ * 
+ * @author Axel, Davin, Keane
+ */
 public class Main {
+    /**
+     * Method utama yang dieksekusi oleh Java
+     *
+     * @param args Argumen baris perintah
+     */
     public static void main(String[] args) {
         Scanner sc;
         int m = 0; // banyak angka
-        int n = 0;
-        // Try Catch untuk input File dan error prevention jika tidak ada file yang
-        // cocok
+        int n = 0; // Ukuran papan
+        // Try Catch untuk input File dan error prevention jika tidak ada file yang cocok
         try {
-            sc = new Scanner(new File("Mosaic/20-Hard.txt")); // ambil file dengan nama "input.txt"
+            // ambil file dengan nama "input.txt"
+            sc = new Scanner(new File("Mosaic/20-Hard.txt"));
             n = sc.nextInt();
+
+            // Array 2 dimensi untuk referensi map
             int[][] mosaic = new int[n][n];
 
+            // List untuk menyimpan koordinat
             List<Coordinate> numberLocation = new ArrayList<>();
 
+            // buat papan kosong dengna isi -1
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     mosaic[i][j] = -1;
                 }
             }
 
-            m = sc.nextInt();
+            m = sc.nextInt(); // Membaca jumlah angka yang ada
+
+            // Luup untuk membaca setiap baris di input
             for (int i = 0; i < m; i++) {
                 int x = sc.nextInt() - 1;
                 int y = sc.nextInt() - 1;
                 int value = sc.nextInt();
 
                 mosaic[x][y] = value;
+
+                // Masukan ke list koordinat
                 numberLocation.add(new Coordinate(x, y, value));
             }
 
+            // Set ke class individual 
             Individual.setMap(mosaic);
             Individual.setNumberLocation(numberLocation);
 
@@ -59,12 +83,14 @@ public class Main {
         long seed = init.nextLong() % 1000; // simpan seed sebagai seed untuk random generator
         Random gen = new Random(seed); // random generator untuk algogen-nya
 
+        // Loop eksekusi GA
         for (int ct = 1; ct <= loop; ct++) {
             // System.out.println("===================\nRun: "+ct);
             int maxCapacity = m, totalGeneration = 0, maxPopulationSize = 0;
             double crossoverRate = 0.0, mutationRate = 0.0, elitismPct = 0.0;
 
-            try { // baca data parameter genetik
+             // baca data parameter GA
+            try {
                 sc = new Scanner(new File("Mosaic/param.txt"));
                 totalGeneration = sc.nextInt();
                 maxPopulationSize = sc.nextInt();
@@ -77,27 +103,31 @@ public class Main {
             // gen (random generator) dikirim ke algogen, jadi hanya menggunakan satu
             // generator untuk keseluruhan algo
 
+            // Inisialisasi GA
             MosaicGA mosaicGA = new MosaicGA(gen, n, totalGeneration, maxPopulationSize, elitismPct,
                     crossoverRate, mutationRate);
+
+            // Jalankan GA dan ambil indibidu terbaik run tersebut
             Individual current = mosaicGA.run();
+
+            // Print hasil run saat ini (5 angka belakang koma)
             System.out.printf("Current Fitness:  %.5f\n", current.fitness);
             // System.out.println(best);
+
+            // Update best fitness jika ad yang lebih baik
             if (current.fitness > bestFitness) {
                 bestFitness = current.fitness;
                 bestState = current;
             }
         }
+        // Print laporan hasil run algo
         System.out.println("\n========================================");
         System.out.println("Seed: " + seed);
         System.out.printf("Best Fitness: %.5f\n", bestState.fitness);
         System.out.println("========================================\n");
-
         System.out.println("=========== HASIL BEST STATE ===========");
-
         System.out.print(bestState);
-
         System.out.println("========================================");
-
         if (bestState.fitness < 1) {
             bestState.printSavedErrors();
         }
@@ -109,6 +139,7 @@ public class Main {
     }
 }
 
+// Jawaban ujicoba awal
 /*
  * 1 0 1 0 0
  * 1 0 0 0 1
