@@ -130,25 +130,47 @@ public class Chromosome {
                 int x = c.getX();
                 int y = c.getY();
                 int count = 0;
+
+                List<Integer[]> indexes = new ArrayList<>();
+
                 for (int i = x - 1; i < x + 2; i++) {
                     for (int j = y - 1; j < y + 2; j++) {
                         if (i >= 0 && i < n && j >= 0 && j < n) {
-                            if(c.getValue() > actual[k]){
-                                if(getCell(i, j, n) == 0){
-                                    flipCell(i, j, n);
-                                    count++;
-                                }
-                            }
-                            else if(c.getValue() < actual[k]){
-                                if(getCell(i, j, n) == 1) {
-                                    flipCell(i, j, n);
-                                    count++;
-                                }
-                            }
+                            indexes.add(new Integer[] { i, j });
+
+                            // if(c.getValue() > actual[k]){
+                            // if(getCell(i, j, n) == 0){
+                            // flipCell(i, j, n);
+                            // count++;
+                            // }
+                            // }
+                            // else if(c.getValue() < actual[k]){
+                            // if(getCell(i, j, n) == 1) {
+                            // flipCell(i, j, n);
+                            // count++;
+                            // }
+                            // }
                         }
 
-                        if(count == selisih) break;
+                        // if(count == selisih) break;
                     }
+                }
+
+                Collections.shuffle(indexes);
+                for (Integer[] index : indexes) {
+                    if (c.getValue() > actual[k]) {
+                        if (getCell(i, j, n) == 0) {
+                            flipCell(i, j, n);
+                            count++;
+                        }
+                    } else if (c.getValue() < actual[k]) {
+                        if (getCell(i, j, n) == 1) {
+                            flipCell(i, j, n);
+                            count++;
+                        }
+                    }
+                    if (count == selisih)
+                        break;
                 }
             }
             k++;
