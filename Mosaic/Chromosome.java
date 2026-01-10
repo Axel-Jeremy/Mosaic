@@ -178,7 +178,7 @@ public class Chromosome {
                 }
 
                 // acak index
-                Collections.shuffle(indexes);
+                Collections.shuffle(indexes, this.MyRand);
 
                 // benerin kotak yang salah
                 for (Integer[] index : indexes) {
