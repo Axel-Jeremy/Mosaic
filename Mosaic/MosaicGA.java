@@ -1,8 +1,6 @@
 package Mosaic;
 
 import java.util.Random;
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -15,32 +13,20 @@ import java.util.List;
  */
 public class MosaicGA{
     Random MyRand;                  // Angka Generator
-    public int totalGeneration;     // Total generasi maksimal
-    public int maxPopulationSize;   // Maksimal populasi
-    public double elitismPct;       // persentase orang yang langsung lanjut ke generasi selanjutnya
-    public double crossoverRate;    // Peluang crossover
-    public double mutationRate;     // Peluang terjadi mutasi
     private int n;                  // jumlah grid di papan nya n*n
+    private Hyperparam parameter;
 
 /**
      * Konstruktor untuk menginisialisasi parameter Algoritma Genetika.
      *
      * @param MyRand Generator angka random
      * @param n Ukuran grid
-     * @param totalGeneration Jumlah generasi maksimal
-     * @param maxPopulationSize Ukuran populasi
-     * @param elitismPct Persentase elitisme
-     * @param crossoverRate Rate crossover
-     * @param mutationRate Rate mutasi
+     * @param parameter list hyperparameter yang akan digunakan
      */
-public MosaicGA(Random MyRand, int n, int totalGeneration, int maxPopulationSize, double elitismPct, double crossoverRate, double mutationRate) {
+public MosaicGA(Random MyRand, int n, Hyperparam parameter) {
         this.MyRand = MyRand;
         this.n = n;
-        this.totalGeneration = totalGeneration;
-        this.maxPopulationSize = maxPopulationSize;
-        this.elitismPct = elitismPct;
-        this.crossoverRate = crossoverRate;
-        this.mutationRate = mutationRate;
+        this.parameter = parameter;
     }
 
     /**
@@ -51,7 +37,7 @@ public MosaicGA(Random MyRand, int n, int totalGeneration, int maxPopulationSize
     public Individual run() {
         int generation = 1;
         // buat populasi awal
-        Population currentPop = new Population(MyRand, this.maxPopulationSize, this.elitismPct);
+        Population currentPop = new Population(MyRand, parameter.getMaxPopulationSize(), parameter.getElitismPct());
         currentPop.randomPopulation(); // populasi diisi individu random
         currentPop.computeAllFitnesses(); // hitung seluruh fitnessnya
 
@@ -68,14 +54,14 @@ public MosaicGA(Random MyRand, int n, int totalGeneration, int maxPopulationSize
                 Individual[] parents = currentPop.selectParents();
 
                 // crossover?
-                if (this.MyRand.nextDouble() < this.crossoverRate) {
+                if (this.MyRand.nextDouble() < parameter.getCrossoverRate()) {
                      // jika ya, crossover kedua parent
                     Individual[] child = parents[0].doCrossover(parents[1]);
                     
                     // Loop setiap anak yang baru masuk
                     for (int i = 0; i < child.length; i++) {
                         // apakah terjadi mutasi?
-                        if (this.MyRand.nextDouble() < this.mutationRate) { 
+                        if (this.MyRand.nextDouble() < parameter.getMutationRate()){ 
                             child[i].doMutation();
                             // newPop.addIndividual(child[i]);
                             // System.out.println(this.mutationRate);
@@ -103,7 +89,7 @@ public MosaicGA(Random MyRand, int n, int totalGeneration, int maxPopulationSize
      * @return true jika harus berhenti, false jika lanjut
      */
     private boolean terminate(int generation) {
-        if (generation >= this.totalGeneration)
+        if (generation >= parameter.getTotalGeneration())
             return true;
         else
             return false;
