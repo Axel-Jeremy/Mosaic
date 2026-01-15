@@ -89,23 +89,24 @@ public class Chromosome {
     }
 
     /**
-     * mutasi genetik dengan flip bit yang terpilih, dimana setiap gen memiliki
-     * probability
-     * untuk bermutasi (flip), ada beberapa teknik dalam melakuakn flip bit
-     * 1. Semua bit di ubah
-     * 2. 1 Index random saja
-     * 3. Probabilistic
-     *
-     * @param probability Nilai mutasi
+     * mutasi dengan flip 1 bit random
      */
     public void flipOneBitMutation() {
         setGene(this.mutation.flipOneBit(this));
     }
 
+    /**
+     * mutasi dengan flip seluruh bit
+     */
     public void flipAllBitMutation() {
         setGene(this.mutation.flipAllBit(this));
     }
 
+    /**
+     * mutasi dengan flip bit random yang terpilih dari probability
+     * 
+     * @param probability peluang mutasi per generasi nya
+     */
     public void probabiltyFlipBitMutation(int probability) {
         setGene(this.mutation.probabiltyFlip(this, probability));
     }

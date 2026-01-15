@@ -4,52 +4,119 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
+
+/**
+ * Class Parent Selection berguna untuk mengatur pemilihan orang tua dari popilasi ketika
+ * crossover dilakukan
+ * Metode:
+ * 1. Tournament Selection
+ * 2. Roulete Wheel
+ * 3. Rank selection
+ * 
+ * @author Axel, Davin, Keane
+ * 
+ */
 public class ParentSelection {
     Random MyRand;
 
+    /**
+     * Konstraktor parentSelection
+     * 
+     * @param MyRand Generator untuk angka acak
+     */
     public ParentSelection(Random myRand) {
         MyRand = myRand;
     }
+
+    /**
+     * Tournament selection menggunakan ide dasar dari tournament dan akan menjalankan tournament sebanyak 2 kali
+     * untuk memilih parent 1 dan parent 2 dari masing masing jaura
+     * 
+     * @param population populasi sekarang
+     * @return 2 individu pemenang turnamen
+     */
+    public Individual[] tournamentSelection(Population population){
+        Individual parent1 = this.tournament(population);
+        Individual parent2 = this.tournament(population);
+
+        return new Individual[]{parent1, parent2};
+    }
+
+
+    /**
+     * Tournament selection menggunakan ide dasar dari tournament dan akan menjalankan tournament
+     * untuk memilih parent 1 dan parent 2 dari juara 1 dan juara 2 nya
+     * 
+     * @param population populasi
+     * @return 2 individu teratas pemenang turnamen
+     */
+    // public Individual[] tournamentSelection(Population population) {
+    //     Individual top1 = null;
+    //     Individual top2 = null;
+    //     int populationSize = population.getPopulationSize();
+
+    //     int loop = (int) (populationSize * 0.002);
+    //     loop = Math.max(2, loop); // minimal 2 individu
+
+    //     // Menentukan ukuran turnamen (tournament size)
+    //     // loop = 16; // Sementara pakai 16
+
+    //     // Loop untuk melakukan turney nya
+    //     for (int i = 0; i < loop; i++) {
+    //         int idx = MyRand.nextInt(populationSize);
+    //         Individual calon = population.getSpecificIndividual(idx);
+
+    //         // bandingin kandidat terbaik yang ada sejauh ini
+    //         if (top1 == null || calon.fitness > top1.fitness) {
+    //             if(top1 != null) top2 = top1;
+                
+    //             top1 = calon;
+    //         }
+    //         if(top2 == null && top1 != null && calon.fitness < top1.fitness){
+    //             top2 = calon;
+    //         }
+    //     }
+    //     return new Individual[]{top1, top2};
+    // }
 
     /**
      * Melakukan seleksi individu menggunakan metode Tournament Selection.
      * Cara kerja: Memilih kandidat secara acak sebanyak tournament akan dilakukan,
      * lalu mengambil yang terbaik (kami pakai roubd of 16)
      *
+     * @param population populasi sekarang
      * @return 1 individu pemenang turnamen
      */
-    public Individual[] tournamentSelection(Population population) {
-        Individual top1 = null;
-        Individual top2 = null;
+    private Individual tournament(Population population) {
         int populationSize = population.getPopulationSize();
 
-        int loop = (int) (populationSize * 0.1);
+        Individual best = null;
+        int loop = (int) (populationSize * 0.003);
         loop = Math.max(2, loop); // minimal 2 individu
 
         // Menentukan ukuran turnamen (tournament size)
-        // loop = 16; // Sementara pakai 16
+        loop = 16; // Sementara pakai 16
 
         // Loop untuk melakukan turney nya
         for (int i = 0; i < loop; i++) {
-            int idx = MyRand.nextInt(populationSize);
+            int idx = this.MyRand.nextInt(populationSize);
             Individual calon = population.getSpecificIndividual(idx);
 
             // bandingin kandidat terbaik yang ada sejauh ini
-            if (top1 == null || calon.fitness > top1.fitness) {
-                if(top1 != null) top2 = top1;
-                
-                top1 = calon;
+            if (best == null || calon.fitness > best.fitness) {
+                best = calon;
             }
         }
-        return new Individual[]{top1, top2};
+        return best;
     }
 
     /**
      * memilih parent menggunakan teknik Roulette Wheel Selection
      *
+     * @param population populasi sekarang
      * @return Array berisi 2 Individu terpilih.
      */
-    public Individual[] selectParent(Population population) {
+    public Individual[] rouletteWheelSelection(Population population) {
         int populationSize = population.getPopulationSize();
         Individual[] parents = new Individual[2];
 
@@ -89,9 +156,10 @@ public class ParentSelection {
     /**
      * memilih perent menggunakan Rank Selection,
      *
+     * @param population populasi sekarang
      * @return Array berisi 2 Individu terpilih.
      */
-    public Individual[] selectParentByRank(Population population) {
+    public Individual[] rankSelection(Population population) {
         int populationSize = population.getPopulationSize();
         Individual[] parents = new Individual[2];
         int N = populationSize;

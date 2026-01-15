@@ -5,13 +5,36 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. mutasi ini berfungsi untuk 
+ * menjaga kerandoman dari populasi dan mencegah terjebak di local maksimum..5f
+ * 
+ * Metode mutasi:
+ * 1. One bit flip (flip hanya 1 bit acak)
+ * 2. Flip all bit (Flip seluruh bit)
+ * 3. Probabilistic Bit (Flip bit sesuai dengan suatu peluang)
+ * 
+ * @author Axel, Davin, Keane
+ * 
+ */
 public class Mutation {
     Random MyRand;
 
+    /**
+     * Konstraktor untuk mutation
+     * 
+     * @param MyRand Generator untuk angka acak
+     */
     public Mutation(Random MyRand) {
         this.MyRand = MyRand;
     }
 
+    /**
+     * balik 1 bit random dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
     public int[] flipOneBit(Chromosome current) {
         int[] currentGene = current.getGene();
         for (int i = 0; i < currentGene.length; i++) {
@@ -20,6 +43,12 @@ public class Mutation {
         return currentGene;
     }
 
+    /**
+     * balik seluruh bit dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
     public int[] flipAllBit(Chromosome current) {
         int[] currentGene = current.getGene();
         int idx = MyRand.nextInt(currentGene.length);
@@ -33,6 +62,12 @@ public class Mutation {
         return currentGene;
     }
 
+    /**
+     * balik bit dari kromosom yang terpilih berdasarkan probability untuk dibalik (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
     public int[] probabiltyFlip(Chromosome current, double probability) {
         int[] currentGene = current.getGene();
 

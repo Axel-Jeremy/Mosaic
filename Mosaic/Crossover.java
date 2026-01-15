@@ -2,9 +2,26 @@ package Mosaic;
 
 import java.util.Random;
 
+/**
+ * Class crossOver bertugas untuk melakukan kombinasi dari 2 parent yang sbeleumnya terpilih
+ * yang akan menghasilkan anak nantinya
+ * 
+ * Metode:
+ * 1. Uniform Crossover
+ * 2. Single Point crossover
+ * 3. Two point crossover
+ * 
+ * @author Axel, Davin, Keane
+ * 
+ */
 public class Crossover {
     Random MyRand;
 
+    /**
+     * Konstraktor untuk crossover
+     * 
+     * @param MyRand Generator untuk angka acak
+     */
     public Crossover(Random MyRand) {
         this.MyRand = MyRand;
     }

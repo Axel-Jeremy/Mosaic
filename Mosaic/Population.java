@@ -58,19 +58,39 @@ public class Population {
         return this.population.get(0);
     }
 
-
+    /**
+     * mengambil maksimal populasi
+     *
+     * @return jumlah populasi maksimal
+     */
     public int getMaxPopulationSize() {
         return maxPopulationSize;
     }
 
+    /**
+     * mengambil jumlah individu dalam populasi
+     *
+     * @return jumlah individu saat ini
+     */
     public int getPopulationSize() {
         return populationSize;
     }
 
+    /**
+     * mengambil daftar semua individu di populasi
+     *
+     * @return arraylist individu
+     */
     public ArrayList<Individual> getPopulations(){
         return population;
     }
 
+    /**
+     * ambil satu individu spesifik berdasarkan indeks dari list populasi
+     *
+     * @param idx Indeks individu yang diambil
+     * @return Individual yang diambil
+     */
     public Individual getSpecificIndividual(int idx) {
         return population.get(idx);
     }

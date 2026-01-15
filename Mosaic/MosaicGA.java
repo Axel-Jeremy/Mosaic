@@ -21,11 +21,7 @@ public class MosaicGA{
      *
      * @param MyRand Generator angka random
      * @param n Ukuran grid
-     * @param totalGeneration Jumlah generasi maksimal
-     * @param maxPopulationSize Ukuran populasi
-     * @param elitismPct Persentase elitisme
-     * @param crossoverRate Rate crossover
-     * @param mutationRate Rate mutasi
+     * @param parameter list hyperparameter yang akan digunakan
      */
 public MosaicGA(Random MyRand, int n, Hyperparam parameter) {
         this.MyRand = MyRand;
