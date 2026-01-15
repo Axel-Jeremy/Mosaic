@@ -36,7 +36,7 @@ public class Main {
         // Try Catch untuk input File dan error prevention jika tidak ada file yang cocok
         try {
             // ambil file dengan nama "input.txt"
-            sc = new Scanner(new File("Mosaic/20-Hard.txt"));
+            sc = new Scanner(new File("Mosaic/Inputs/20-Hard.txt"));
             n = sc.nextInt();
 
             // Array 2 dimensi untuk referensi map
@@ -76,27 +76,32 @@ public class Main {
         }
 
         int loop = Integer.parseInt(args[0]);// berapa kali algogen dijalankan
-        double total = 0;
         Random init = new Random(); // random generator untuk membuat seeds
         double bestFitness = Double.MIN_VALUE;
+
+        double top5 = 0;
+        double top10 = 0;
+
         Individual bestState = null;
         long seed = 67; // simpan seed sebagai seed untuk random generator
         Random gen = new Random(seed); // random generator untuk algogen-nya
-
+        Hyperparam parameter = null;
         // Loop eksekusi GA
         for (int ct = 1; ct <= loop; ct++) {
             // System.out.println("===================\nRun: "+ct);
-            int maxCapacity = m, totalGeneration = 0, maxPopulationSize = 0;
+            int totalGeneration = 0, maxPopulationSize = 0;
             double crossoverRate = 0.0, mutationRate = 0.0, elitismPct = 0.0;
 
              // baca data parameter GA
             try {
                 sc = new Scanner(new File("Mosaic/param.txt"));
-                totalGeneration = sc.nextInt();
-                maxPopulationSize = sc.nextInt();
-                crossoverRate = sc.nextDouble(); // skala 0-1
-                mutationRate = sc.nextDouble(); // skala 0-1
-                elitismPct = sc.nextDouble(); // skala 0-1
+                parameter = new Hyperparam(
+                sc.nextInt(), 
+                sc.nextInt(), 
+                sc.nextDouble(), 
+                sc.nextDouble(), 
+                sc.nextDouble()
+            );
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -104,8 +109,7 @@ public class Main {
             // generator untuk keseluruhan algo
 
             // Inisialisasi GA
-            MosaicGA mosaicGA = new MosaicGA(gen, n, totalGeneration, maxPopulationSize, elitismPct,
-                    crossoverRate, mutationRate);
+            MosaicGA mosaicGA = new MosaicGA(gen, n, parameter);
 
             // Jalankan GA dan ambil indibidu terbaik run tersebut
             Individual current = mosaicGA.run();
@@ -119,16 +123,21 @@ public class Main {
                 bestFitness = current.fitness;
                 bestState = current;
             }
+
+            if(ct == 5) top5 = bestFitness;
+            if(ct == 10) top10 = bestFitness;
         }
         // Print laporan hasil run algo
         System.out.println("\n========================================");
         System.out.println("Seed: " + seed);
-        System.out.printf("Best Fitness: %.5f\n", bestState.fitness);
+        System.out.printf("Top 5 Fitness: %.5f\n", top5);
+        System.out.printf("Top 10 Fitness: %.5f\n", top10);
+        System.out.printf("Best Fitness: %.5f\n", bestFitness);
         System.out.println("========================================\n");
         System.out.println("=========== HASIL BEST STATE ===========");
         System.out.print(bestState);
         System.out.println("========================================");
-        if (bestState.fitness < 1) {
+        if (bestFitness < 1) {
             bestState.printSavedErrors();
         }
         else{

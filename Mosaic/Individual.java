@@ -239,7 +239,7 @@ public class Individual implements Comparable<Individual> {
      */
     public void doMutation() {
         // this.chromosome.doMutation(0.5);
-        this.chromosome.doMutation(numberLocation, actualValues, n);
+        this.chromosome.randomAdjustmentMutation(numberLocation, actualValues, n);
     }
 
     /**
@@ -304,30 +304,3 @@ public class Individual implements Comparable<Individual> {
         System.out.println("========================================");
     }
 }
-
-// Expected : 4, Actual : 3 at [3, 2]
-/*
- * boolean hasError = false;
- * 
- * // Loop semua lokasi angka (Clue)
- * for (Coordinate c : numberLocation) {
- * // Hitung jumlah hitam saat ini menggunakan method countBlackCell yang sudah
- * Anda perbaiki
- * int actual = countBlackCell(c.getX(), c.getY());
- * int expected = c.getValue();
- * 
- * // Jika jumlahnya tidak sesuai target
- * if (actual != expected) {{[String][String][Coordinate]}
- * // Kita print (X+1, Y+1) supaya sesuai dengan file input.txt (1-based index)
- * System.out.printf("Expected : %d, Actual : %d at [%d, %d]\n",
- * expected, actual, (c.getX() + 1), (c.getY() + 1));
- * hasError = true;
- * }
- * }
- * 
- * if (!hasError) {
- * System.out.println("Status: SOLVED (Semua angka sesuai).");
- * } else {
- * System.out.println("Status: UNSOLVED (Masih ada ketidakcocokan).");
- * }
- */
