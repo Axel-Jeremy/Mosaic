@@ -7,7 +7,7 @@ import java.util.Random;
  * akan mengatur siklus seleksi, crossover,
  * dan mutasi dari individu individu di algo GA ini
  * 
- * Sumber: ...
+ * Sumber: Sendiri dengan landasan Tugas Fire Station dan dengan bantuan debug LLM
  * 
  * @author Axel, Davin, Keane
  */

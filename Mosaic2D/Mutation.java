@@ -15,6 +15,8 @@ import java.util.Random;
  * 2. Flip all bit (Flip seluruh bit)
  * 3. Probabilistic Bit (Flip bit sesuai dengan suatu peluang)
  * 
+ * Sumber: Tugas Fire Station yang dimodifikasi
+ * 
  * @author Axel, Davin, Keane
  * 
  */

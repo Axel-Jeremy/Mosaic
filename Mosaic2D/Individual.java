@@ -13,6 +13,7 @@ import java.util.Random;
  * yang dimiliki dibandingkan dengan jawaban benarnya
  * 
  * Sumber:
+ * Sendiri dengan bantuan LLM untuk debugging
  * https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
  * 
  * @author Axel, Davin, Keane

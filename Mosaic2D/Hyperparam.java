@@ -5,6 +5,8 @@ package Mosaic2D;
  * training
  * class ini akan mengatur mutasi, ukuran generasi, dll.
  * 
+ * Sumber : Sendiri dengan refrensi Tugas Fire Station
+ * 
  * @author Axel, Keane
  * 
  */

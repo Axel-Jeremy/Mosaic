@@ -6,8 +6,7 @@ package Mosaic2D;
  * dan angka pada titik itu yang menunjukan berapa banyak kotak hitam yang harus
  * ada di sekitarnya termasukdi titik tersebut
  * 
- * Sumber: ...
- * 
+ * Sumber: Sendiri dengan refrensi Tugas Fire Station
  * @author Axel
  * 
  */

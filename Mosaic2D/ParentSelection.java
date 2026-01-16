@@ -13,6 +13,8 @@ import java.util.Random;
  * 2. Roulete Wheel
  * 3. Rank selection
  * 
+ * Sumber: Tugas Fire Station yang dimodifikasi dengan bantuan debug LLM
+ * 
  * @author Axel, Davin, Keane
  * 
  */

@@ -10,7 +10,7 @@ import java.util.Random;
  * mengelola pemilihan orang tua, elitism, dan siklus dari seluruh individu di
  * algoritma ini
  * 
- * Sumber: -
+ * Sumber: Tugas Fire Station yang dimodifikasi dengan bantuan debug LLM
  * 
  * @author Axel, Davin, Keane
  * 
