@@ -35,11 +35,15 @@ public class Mutation {
      * @param current Chromosome yang dimutasi
      * @return Array gen baru hasil mutasi
      */
-    public int[] flipOneBit(Chromosome current) {
-        int[] currentGene = current.getGene();
-        for (int i = 0; i < currentGene.length; i++) {
-            currentGene[i] = currentGene[i] == 0 ? 1:0;
-        }
+    public int[][] flipOneBit(Chromosome current) {
+        int[][] currentGene = current.getGene();
+        int n = currentGene.length;
+
+        int r = MyRand.nextInt(n);
+        int c = MyRand.nextInt(n);
+
+        currentGene[r][c] = (currentGene[r][c] == 0) ? 1 : 0;
+
         return currentGene;
     }
 
@@ -49,16 +53,14 @@ public class Mutation {
      * @param current Chromosome yang dimutasi
      * @return Array gen baru hasil mutasi
      */
-    public int[] flipAllBit(Chromosome current) {
-        int[] currentGene = current.getGene();
-        int idx = MyRand.nextInt(currentGene.length);
-        int idxArr[] = new int[idx];
-        
-        for (int index : idxArr) {
-        index = MyRand.nextInt(currentGene.length);
-        }
-        currentGene[idx] = currentGene[idx] == 0 ? 1 : 0;
+    public int[][] flipAllBit(Chromosome current) {
+        int[][] currentGene = current.getGene();
 
+        for (int i = 0; i < currentGene.length; i++) {
+            for (int j = 0; j < currentGene[i].length; j++) {
+                currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+            }
+        }
         return currentGene;
     }
 
@@ -68,12 +70,14 @@ public class Mutation {
      * @param current Chromosome yang dimutasi
      * @return Array gen baru hasil mutasi
      */
-    public int[] probabiltyFlip(Chromosome current, double probability) {
-        int[] currentGene = current.getGene();
+    public int[][] probabiltyFlip(Chromosome current, double probability) {
+        int[][] currentGene = current.getGene();
 
         for (int i = 0; i < currentGene.length; i++) {
-            if (MyRand.nextDouble() < probability) {
-                currentGene[i] = (currentGene[i] == 0) ? 1 : 0;
+            for (int j = 0; j < currentGene[i].length; j++) {
+                if (MyRand.nextDouble() < probability) {
+                    currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+                }
             }
         }
         return currentGene;
@@ -87,7 +91,7 @@ public class Mutation {
      * @param actual Array yang berisi jumlah kotak hitam aktual di sekitar setiap clue
      * @param n Ukuran sisi grid
      */
-    public int[] randomAdjustment(Chromosome current, List<Coordinate> numberLocation, int[] actual, int n) {
+    public int[][] randomAdjustment(Chromosome current, List<Coordinate> numberLocation, int[] actual, int n) {
         int k = 0;
 
         // Loop untuk seluruh kondisi angka
@@ -118,23 +122,26 @@ public class Mutation {
 
                 // benerin kotak yang salah
                 for (Integer[] index : indexes) {
-                    // item lebih banyak dari aslinya, 
+                    int row = index[0];
+                    int col = index[1];
+
+                    int cellValue = current.getCell(row, col);
+
+                    // item lebih banyak dari aslinya
                     if (c.getValue() > actual[k]) {
-                        if (current.getCell(index[0], index[1], n) == 0) {
-                            //tuker kotak item jadi putih
-                            current.flipCell(index[0], index[1], n);
-                            count++;
-                        }
-                    } 
-                    // Kalau kotak putih lebih banyak
-                    else if (c.getValue() < actual[k]) {
-                        if (current.getCell(index[0], index[1], n) == 1) {
-                            // puter jadi kotak item
-                            current.flipCell(index[0], index[1], n);
+                        if (cellValue == 0) {
+                            current.flipCell(row, col);
                             count++;
                         }
                     }
-                    // kalau udh sama kek sleisih, berenti
+                    // Kalau kotak putih lebih banyak (atau item kurang)
+                    else if (c.getValue() < actual[k]) {
+                        if (cellValue == 1) {
+                            current.flipCell(row, col);
+                            count++;
+                        }
+                    }
+                    // kalau udh sama kek selisih, berenti
                     if (count == selisih)
                         break;
                 }

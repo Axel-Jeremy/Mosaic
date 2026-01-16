@@ -36,7 +36,7 @@ public class Main {
         // Try Catch untuk input File dan error prevention jika tidak ada file yang cocok
         try {
             // ambil file dengan nama "input.txt"
-            sc = new Scanner(new File("Mosaic/Inputs/20-Hard.txt"));
+            sc = new Scanner(new File("Inputs/20-Hard.txt"));
             n = sc.nextInt();
 
             // Array 2 dimensi untuk referensi map
@@ -94,7 +94,7 @@ public class Main {
 
              // baca data parameter GA
             try {
-                sc = new Scanner(new File("Mosaic/param.txt"));
+                sc = new Scanner(new File("param.txt"));
                 parameter = new Hyperparam(
                 sc.nextInt(), 
                 sc.nextInt(), 

@@ -81,7 +81,7 @@ public class Individual implements Comparable<Individual> {
      * @return 1 (Hitam) atau 0 (Putih).
      */
     public int getCell(int row, int col) {
-        return chromosome.getCell(row, col, n);
+        return chromosome.getCell(row, col);
     }
 
      /**
@@ -238,7 +238,8 @@ public class Individual implements Comparable<Individual> {
      * melakukan mutasi pada kromosom di individu dengan rate mutasi sesuai input
      */
     public void doMutation() {
-        // this.chromosome.doMutation(0.5);
+        // this.chromosome.probabilityFlipBitMutation(0.5);
+        // this.chromosome.flipOneBitMutation();
         this.chromosome.randomAdjustmentMutation(numberLocation, actualValues, n);
     }
 

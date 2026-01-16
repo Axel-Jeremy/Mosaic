@@ -14,7 +14,7 @@ import java.util.Random;
  * 
  */
 public class Chromosome {
-    private int[] gene;
+    private int[][] gene;
     public Random MyRand; // random generator
     private static final int FILLED = 1; // penanda grid ditandai kotak hitam
     private static final int EMPTY = 0; // penanda grid ditandai kotak putih
@@ -43,8 +43,8 @@ public class Chromosome {
      * @param n Ukuran sisi grid
      * @return Nilai gen (1 atau 0)
      */
-    public int getCell(int x, int y, int n) {
-        return gene[x * n + y];
+    public int getCell(int x, int y) {
+        return gene[x][y];
     }
 
     /**
@@ -54,8 +54,8 @@ public class Chromosome {
      * @param y Kolom
      * @param n Ukuran sisi grid
      */
-    public void flipCell(int x, int y, int n) {
-        gene[x * n + y] = gene[x * n + y] == 0 ? 1 : 0;
+    public void flipCell(int x, int y) {
+        gene[x][y] = gene[x][y] == 0 ? 1 : 0;
     }
 
     /**
@@ -63,7 +63,7 @@ public class Chromosome {
      * 
      * @return Array integer gene
      */
-    public int[] getGene() {
+    public int[][] getGene() {
         return gene;
     }
 
@@ -72,7 +72,7 @@ public class Chromosome {
      * 
      * @param gene Array integer gene baru
      */
-    public void setGene(int[] gene) {
+    public void setGene(int[][] gene) {
         this.gene = gene;
     }
 
@@ -81,10 +81,12 @@ public class Chromosome {
      * digunakan hanya pada generasi pertama
      */
     public void generateRandom(int n) {
-        this.gene = new int[n * n];
-        for (int i = 0; i < n * n; i++) {
-            int status = MyRand.nextInt(BOUND);
-            gene[i] = (status == 0) ? EMPTY : FILLED;
+        this.gene = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int status = MyRand.nextInt(BOUND);
+                gene[i][j] = (status == 0) ? EMPTY : FILLED;
+            }
         }
     }
 
@@ -165,20 +167,15 @@ public class Chromosome {
     @Override
     public String toString() {
         String res = "";
-        int count = 0;
-        int length = (int) Math.sqrt(gene.length);
-        // System.out.println(gene.length);
+
         for (int i = 0; i < gene.length; i++) {
-            if (gene[i] == 1)
-                res += "B ";
-            else
-                res += "W ";
-            count++;
-            // Ganti baris setiap mencapai lebar grid
-            if (count == length) {
-                count = 0;
-                res += "\n";
+            for (int j = 0; j < gene[i].length; j++) {
+                if (gene[i][j] == 1)
+                    res += "B ";
+                else
+                    res += "W ";
             }
+            res += "\n";
         }
         return res;
     }
