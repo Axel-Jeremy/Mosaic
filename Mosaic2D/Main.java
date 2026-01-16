@@ -20,7 +20,7 @@ SbX SbY Value (misal : 2 4 1)
  * kedalam individu dan membaca parameter GA yang digunakan
  * terkahir main akan menampilkan visualisasi berbasis CLI untuk solusi dan
  * detail hasil apakah berhasil atau gagal
- * <p>
+ * 
  * Sumber: ...
  *
  * @author Axel, Davin, Keane
@@ -34,8 +34,7 @@ public class Main {
     public static void main(String[] args) {
 
         String[] fileList = {
-                "5-Easy_1", "5-Easy_2", "5-Easy_3", "5-Easy_4", "5-Easy_5",
-                "5-Hard_1", "5-Hard_2", "5-Hard_3", "5-Hard_4", "5-Hard_5"
+                "20-Hard_5"
         };
 
         int loop = Integer.parseInt(args[0]);// berapa kali algogen dijalankan
@@ -48,7 +47,7 @@ public class Main {
             // cocok
             try {
                 // ambil file dengan nama "input.txt"
-                sc = new Scanner(new File("Inputs/" + fileName + ".txt"));
+                sc = new Scanner(new File("Mosaic2D/Inputs/" + fileName + ".txt"));
                 n = sc.nextInt();
 
                 // Array 2 dimensi untuk referensi map
@@ -106,7 +105,7 @@ public class Main {
 
                 // baca data parameter GA
                 try {
-                    sc = new Scanner(new File("param.txt"));
+                    sc = new Scanner(new File("Mosaic2D/param.txt"));
                     parameter = new Hyperparam(
                             sc.nextInt(),
                             sc.nextInt(),
