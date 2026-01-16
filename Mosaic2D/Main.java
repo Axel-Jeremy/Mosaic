@@ -92,8 +92,8 @@ public class Main {
         // Loop eksekusi GA
         for (int ct = 1; ct <= loop; ct++) {
             // System.out.println("===================\nRun: "+ct);
-            int totalGeneration = 0, maxPopulationSize = 0;
-            double crossoverRate = 0.0, mutationRate = 0.0, elitismPct = 0.0;
+            // int totalGeneration = 0, maxPopulationSize = 0;
+            // double crossoverRate = 0.0, mutationRate = 0.0, elitismPct = 0.0;
 
             // baca data parameter GA
             try {
@@ -134,8 +134,8 @@ public class Main {
         // Print laporan hasil run algo
         System.out.println("\n========================================");
         System.out.println("Seed: " + seed);
-        System.out.printf("Best in 5: %.5f\n", top5);
-        System.out.printf("Best in 10: %.5f\n", top10);
+        // System.out.printf("Best in 5: %.5f\n", top5);
+        // System.out.printf("Best in 10: %.5f\n", top10);
         System.out.printf("Best Fitness: %.5f\n", bestFitness);
         System.out.println("========================================\n");
         System.out.println("=========== HASIL BEST STATE ===========");
