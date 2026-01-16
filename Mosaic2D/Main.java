@@ -21,7 +21,8 @@ SbX SbY Value (misal : 2 4 1)
  * terkahir main akan menampilkan visualisasi berbasis CLI untuk solusi dan
  * detail hasil apakah berhasil atau gagal
  * 
- * Sumber: ...
+ * Sumber: Mandiri
+ * - Ide input file yang dijalankan dengan looping dari teman seangkatan (Kenneth Nathanael)
  *
  * @author Axel, Davin, Keane
  */

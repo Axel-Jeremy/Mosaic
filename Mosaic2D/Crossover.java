@@ -11,6 +11,15 @@ import java.util.Random;
  * 1. Uniform Crossover
  * 2. Single Point crossover
  * 3. Two point crossover
+ * 4. Horizontal Crossover
+ * 5. Vertical Crossover
+ * 6. Right Diagonal Crossover
+ * 7. Left Diagonal Crossover
+ * 8. Center Point Plus Crossover
+ * 9. Random Point Plus Crossover
+ * 10. Double Diagonal Crossover
+ * 
+ * Sumber: Sendiri dengan refrensi Tugas Fire Station dan debugging LLM
  * 
  * @author Axel, Davin, Keane
  * 
@@ -79,7 +88,7 @@ public class Crossover {
         int n = currentGene.length;
         // int totalCells = n * n;
 
-        int potongan = MyRand.nextInt(n);
+        int potongan = MyRand.nextInt((n*n) -1);
 
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
@@ -130,7 +139,7 @@ public class Crossover {
         int n = currentGene.length;
         // int totalCells = n * n;
 
-        int potongan = MyRand.nextInt(n);
+        int potongan = MyRand.nextInt(n -1);
 
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
@@ -182,7 +191,7 @@ public class Crossover {
         int n = currentGene.length;
         // int totalCells = n * n;
 
-        int potongan = MyRand.nextInt(n);
+        int potongan = MyRand.nextInt(n -1);
 
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
@@ -217,9 +226,9 @@ public class Crossover {
     }
 
     /**
-     * Melakukan diagonal crossover (kiri atas ke kanan bawah)
-     * Memotong grid secara vertikal (kolom), dimana bagian kiri akan menjadi 
-     * parent 1 dan yang kanan akan menjadi parent 2 (Single Point Crossover)
+     * Melakukan diagonal crossover (kiri atas ke kanan bawah) (\)
+     * bagian kiri dari parent 1 kanan diambil dari parent 2 (untuk anak 1)
+     * bagian kiri dari parent 2 kanan diambil dari parent 1 (untuk anak 2)
      * 
      * @param current Parent pertama
      * @param other Parent kedua
@@ -267,7 +276,17 @@ public class Crossover {
     }
 
 
-    // diagonal(/)
+    /**
+     * Melakukan diagonal crossover (kanan atas ke kiri bawah) (/)
+     * Memotong grid secara diagonal dan bagian kanan atas ke kiri bawah
+     * bagian kiri dari parent 1 bagian kanan parent 2 (untuk anak 1)
+     * bagian kiri dari parent 2 bagian kanan parent 1 (untuk anak 2)
+     * 
+     * 
+     * @param current Parent pertama
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
     public Chromosome[] leftDiagonalCrossover(Chromosome current, Chromosome other) {
         // Tentukan titik potong
         // int potongan = this.gene.length / 2;
@@ -310,7 +329,17 @@ public class Crossover {
     }
 
 
-    // tanda plus(+) tengah
+    /**
+     * Melakukan pembagian seperti kuadran 
+     *  2 1
+     *  3 4
+     * Anak 1 : kuadran 2 dan 4 dari parent 1, kuadran 1 dan 3 dari parent 2
+     * Anak 2 : kuadran 2 dan 4 dari parent 2, kuadran 1 dan 3 dari parent 1
+     * 
+     * @param current Parent pertama
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
     public Chromosome[] centerPointPlusCrossover(Chromosome current, Chromosome other) {
         // Tentukan titik potong
         // int potongan = this.gene.length / 2;
@@ -351,7 +380,14 @@ public class Crossover {
         return new Chromosome[] { child1, child2 };
     }
 
-    // tanda plus(+) random
+    /**
+     * Melakukan quadrant crossover dengan titik random, pada dasarnya bakal mirip dengan
+     * center point crossover tapi titik temu antar 2 garisnya random
+     * 
+     * @param current Parent pertama
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
     public Chromosome[] randomPointPlusCrossover(Chromosome current, Chromosome other) {
         // Tentukan titik potong
         // int potongan = this.gene.length / 2;
@@ -392,7 +428,21 @@ public class Crossover {
         return new Chromosome[] { child1, child2 };
     }
 
-    // double diagonal (X)
+    /**
+     * melakukan diagobal crossover tapi bentuk x dengan membagi grid jadi 2 garis menyilang seperti bentuk x
+     * Anak 1: Segitiga atas bawah parent 1 dan Segitiga kanan dan kiri parent 2
+     * Anak 2: Segitiga atas bawah parent 2 dan Segitiga kanan dan kiri parent 1
+     * 
+     * Ilustrasi: 
+     * .\../.
+     * ..\/..
+     * ../\..
+     * ./..\.
+     * 
+     * @param current Parent pertama
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
     public Chromosome[] doubleDiagonalCrossover(Chromosome current, Chromosome other) {
         // Tentukan titik potong
         // int potongan = this.gene.length / 2;
@@ -458,8 +508,8 @@ public class Crossover {
         int[][] child2Gene = new int[n][n];
 
         // tentukan titik potong 1 dan 2
-        int point1 = MyRand.nextInt(totalCells);
-        int point2 = MyRand.nextInt(totalCells);
+        int point1 = MyRand.nextInt(totalCells -1);
+        int point2 = MyRand.nextInt(totalCells -1);
 
         // Buat agar titik potong start lebih kecil dari end
         int start = Math.min(point1, point2);

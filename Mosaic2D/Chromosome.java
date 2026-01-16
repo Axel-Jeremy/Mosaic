@@ -9,7 +9,7 @@ import java.util.Random;
  * yang setiap gen nya akan bernilai 1 jika dia merupakan kotak hitam dan 0 jika
  * putih/kosong
  * 
- * Sumber: ...
+ * Sumber: Membuat sendiri dengan bantuan LLM
  * 
  * @author Axel, Davin, Keane
  * 
@@ -37,7 +37,7 @@ public class Chromosome {
 
     /**
      * ambil nilai gen pada grid(baris, kolom) tertentu dan di mapping dari
-     * koordinat 2D ke array 1D
+     * koordinat 2D ke array 2D
      *
      * @param x Baris
      * @param y Kolom
