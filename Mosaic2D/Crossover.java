@@ -3,7 +3,8 @@ package Mosaic2D;
 import java.util.Random;
 
 /**
- * Class crossover bertugas untuk melakukan kombinasi dari 2 parent yang sbeleumnya terpilih
+ * Class crossover bertugas untuk melakukan kombinasi dari 2 parent yang
+ * sbeleumnya terpilih
  * yang akan menghasilkan anak nantinya
  * 
  * Metode:
@@ -25,6 +26,7 @@ public class Crossover {
     public Crossover(Random MyRand) {
         this.MyRand = MyRand;
     }
+
     /**
      * Melakukan Uniform Crossover
      * Setiap gen anak akan dipilih secara acak dari salah satu orang tua
@@ -49,7 +51,8 @@ public class Crossover {
             for (int j = 0; j < m; j++) {
                 // Acak pengambilan gen untuk Anak 1
                 child1Gene[i][j] = MyRand.nextBoolean() ? currentGene[i][j] : otherGene[i][j];
-                // Acak pengambilan gen untuk Anak 2 (kebalikannya atau acak ulang, di sini logic aslinya acak ulang)
+                // Acak pengambilan gen untuk Anak 2 (kebalikannya atau acak ulang, di sini
+                // logic aslinya acak ulang)
                 child2Gene[i][j] = MyRand.nextBoolean() ? otherGene[i][j] : currentGene[i][j];
             }
         }
@@ -68,6 +71,49 @@ public class Crossover {
      * @return Array berisi 2 Chromosome anak
      */
     public Chromosome[] singlePointCrossover(Chromosome current, Chromosome other) {
+        // Tentukan titik potong
+        // int potongan = this.gene.length / 2;
+        int[][] currentGene = current.getGene();
+        int[][] otherGene = other.getGene();
+
+        int n = currentGene.length;
+        // int totalCells = n * n;
+
+        int potongan = MyRand.nextInt(n);
+
+        Chromosome child1 = new Chromosome(MyRand);
+        Chromosome child2 = new Chromosome(MyRand);
+
+        int[][] child1Gene = new int[n][n];
+        int[][] child2Gene = new int[n][n];
+
+        int count = 0;
+
+        // Lakukan crossover dengan menyalin gen
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (count <= potongan) {
+                    // Anak 1 mengambil dari Parent 1 (current)
+                    child1Gene[i][j] = currentGene[i][j];
+                    // Anak 2 mengambil dari Parent 2 (other)
+                    child2Gene[i][j] = otherGene[i][j];
+                } else {
+                    // Anak 1 mengambil dari Parent 2 (other)
+                    child1Gene[i][j] = otherGene[i][j];
+                    // Anak 2 mengambil dari Parent 1 (current)
+                    child2Gene[i][j] = currentGene[i][j];
+                }
+                count++;
+            }
+        }
+
+        child1.setGene(child1Gene);
+        child2.setGene(child2Gene);
+
+        return new Chromosome[] { child1, child2 };
+    }
+
+    public Chromosome[] verticalCrossover(Chromosome current, Chromosome other) {
         // Tentukan titik potong
         // int potongan = this.gene.length / 2;
         int[][] currentGene = current.getGene();
@@ -111,6 +157,49 @@ public class Crossover {
         return new Chromosome[] { child1, child2 };
     }
 
+    public Chromosome[] horizontalCrossover(Chromosome current, Chromosome other) {
+        // Tentukan titik potong
+        // int potongan = this.gene.length / 2;
+        int[][] currentGene = current.getGene();
+        int[][] otherGene = other.getGene();
+
+        int n = currentGene.length;
+        // int totalCells = n * n;
+
+        int potongan = MyRand.nextInt(n);
+
+        Chromosome child1 = new Chromosome(MyRand);
+        Chromosome child2 = new Chromosome(MyRand);
+
+        int[][] child1Gene = new int[n][n];
+        int[][] child2Gene = new int[n][n];
+
+        int count = 0;
+
+        // Lakukan crossover dengan menyalin gen
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (count <= potongan) {
+                    // Anak 1 mengambil dari Parent 1 (current)
+                    child1Gene[i][j] = currentGene[i][j];
+                    // Anak 2 mengambil dari Parent 2 (other)
+                    child2Gene[i][j] = otherGene[i][j];
+                } else {
+                    // Anak 1 mengambil dari Parent 2 (other)
+                    child1Gene[i][j] = otherGene[i][j];
+                    // Anak 2 mengambil dari Parent 1 (current)
+                    child2Gene[i][j] = currentGene[i][j];
+                }
+            }
+            count++;
+        }
+
+        child1.setGene(child1Gene);
+        child2.setGene(child2Gene);
+
+        return new Chromosome[] { child1, child2 };
+    }
+
     /**
      * Melakukan Two Point Crossover dengan memilih dua titik potong,
      * lalu menukar segmen di antara kedua titik tersebut
@@ -124,7 +213,6 @@ public class Crossover {
 
         int n = currentGene.length;
         int totalCells = n * n;
-
 
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
