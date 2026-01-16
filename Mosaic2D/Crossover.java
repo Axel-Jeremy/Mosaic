@@ -1,9 +1,9 @@
-package Mosaic;
+package Mosaic2D;
 
 import java.util.Random;
 
 /**
- * Class crossOver bertugas untuk melakukan kombinasi dari 2 parent yang sbeleumnya terpilih
+ * Class crossover bertugas untuk melakukan kombinasi dari 2 parent yang sbeleumnya terpilih
  * yang akan menghasilkan anak nantinya
  * 
  * Metode:
@@ -35,8 +35,6 @@ public class Crossover {
     public Chromosome[] uniformCrossover(Chromosome current, Chromosome other) {
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
-
-        int geneLength = current.getGene().length;
 
         int[][] currentGene = current.getGene();
         int[][] otherGene = other.getGene();
@@ -76,9 +74,9 @@ public class Crossover {
         int[][] otherGene = other.getGene();
 
         int n = currentGene.length;
-        int totalCells = n * n;
+        // int totalCells = n * n;
 
-        int potongan = MyRand.nextInt(totalCells);
+        int potongan = MyRand.nextInt(n);
 
         Chromosome child1 = new Chromosome(MyRand);
         Chromosome child2 = new Chromosome(MyRand);
@@ -90,6 +88,7 @@ public class Crossover {
 
         // Lakukan crossover dengan menyalin gen
         for (int i = 0; i < n; i++) {
+            count = 0;
             for (int j = 0; j < n; j++) {
                 if (count <= potongan) {
                     // Anak 1 mengambil dari Parent 1 (current)

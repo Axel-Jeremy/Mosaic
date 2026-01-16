@@ -1,4 +1,4 @@
-package Mosaic;
+package Mosaic1D;
 
 import java.util.*;
 import java.io.File;

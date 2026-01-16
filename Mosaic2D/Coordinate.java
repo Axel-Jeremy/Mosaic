@@ -1,4 +1,4 @@
-package Mosaic;
+package Mosaic2D;
 
 /**
  * Class Coordinate mempresentasikan papan mosaic puzzle yang berisikan clue,

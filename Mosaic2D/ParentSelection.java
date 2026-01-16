@@ -1,4 +1,4 @@
-package Mosaic;
+package Mosaic2D;
 
 import java.util.ArrayList;
 import java.util.Collections;

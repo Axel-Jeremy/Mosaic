@@ -1,4 +1,4 @@
-package Mosaic;
+package Mosaic2D;
 
 import java.util.*;
 import java.io.File;
@@ -130,8 +130,8 @@ public class Main {
         // Print laporan hasil run algo
         System.out.println("\n========================================");
         System.out.println("Seed: " + seed);
-        System.out.printf("Top 5 Fitness: %.5f\n", top5);
-        System.out.printf("Top 10 Fitness: %.5f\n", top10);
+        System.out.printf("Best in 5: %.5f\n", top5);
+        System.out.printf("Best in 10: %.5f\n", top10);
         System.out.printf("Best Fitness: %.5f\n", bestFitness);
         System.out.println("========================================\n");
         System.out.println("=========== HASIL BEST STATE ===========");

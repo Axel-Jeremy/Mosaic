@@ -1,4 +1,4 @@
-package Mosaic;
+package Mosaic2D;
 
 /**
  * Class Hyperparam memiliki fungsi untuk nyimpen parameter konfigurasi ketika training

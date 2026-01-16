@@ -1,4 +1,4 @@
-package Mosaic;
+package Mosaic2D;
 
 import java.util.Random;
 
