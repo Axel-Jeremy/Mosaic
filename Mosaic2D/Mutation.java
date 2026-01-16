@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. mutasi ini berfungsi untuk 
+ * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. mutasi
+ * ini berfungsi untuk
  * menjaga kerandoman dari populasi dan mencegah terjebak di local maksimum..5f
  * 
  * Metode mutasi:
@@ -65,7 +66,8 @@ public class Mutation {
     }
 
     /**
-     * balik bit dari kromosom yang terpilih berdasarkan probability untuk dibalik (item jadi putih atau sebaliknya)
+     * balik bit dari kromosom yang terpilih berdasarkan probability untuk dibalik
+     * (item jadi putih atau sebaliknya)
      *
      * @param current Chromosome yang dimutasi
      * @return Array gen baru hasil mutasi
@@ -84,12 +86,15 @@ public class Mutation {
     }
 
     /**
-     * Melakukan mutasi untuk memperbaiki kromosom dengan membandingkan nilai pada angka dengan jumlah kotak hitam aktual.
-     * Jika tidak sesuai, maka akan membalik sel hitam di sekitar angka tersebut sampai sama dengan jumlah kotak hitam yang diharapkan
+     * Melakukan mutasi untuk memperbaiki kromosom dengan membandingkan nilai pada
+     * angka dengan jumlah kotak hitam aktual.
+     * Jika tidak sesuai, maka akan membalik sel hitam di sekitar angka tersebut
+     * sampai sama dengan jumlah kotak hitam yang diharapkan
      * 
      * @param numberLocation Daftar koordinat angka pada puzzle
-     * @param actual Array yang berisi jumlah kotak hitam aktual di sekitar setiap clue
-     * @param n Ukuran sisi grid
+     * @param actual         Array yang berisi jumlah kotak hitam aktual di sekitar
+     *                       setiap clue
+     * @param n              Ukuran sisi grid
      */
     public int[][] randomAdjustment(Chromosome current, List<Coordinate> numberLocation, int[] actual, int n) {
         int k = 0;

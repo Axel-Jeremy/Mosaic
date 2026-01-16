@@ -42,7 +42,7 @@ public class Population {
         // this.maxCapacity = maxCapacity;
 
         this.parentSelection = new ParentSelection(MyRand);
-        
+
         // Menghitung jumlah rank untuk rank selection
         for (int i = 1; i <= this.maxPopulationSize; i++)
             this.sumRank = this.sumRank + i;
@@ -81,7 +81,7 @@ public class Population {
      *
      * @return arraylist individu
      */
-    public ArrayList<Individual> getPopulations(){
+    public ArrayList<Individual> getPopulations() {
         return population;
     }
 

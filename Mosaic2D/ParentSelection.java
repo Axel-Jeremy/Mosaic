@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-
 /**
- * Class Parent Selection berguna untuk mengatur pemilihan orang tua dari popilasi ketika
+ * Class Parent Selection berguna untuk mengatur pemilihan orang tua dari
+ * popilasi ketika
  * crossover dilakukan
  * Metode:
  * 1. Tournament Selection
@@ -29,54 +29,55 @@ public class ParentSelection {
     }
 
     /**
-     * Tournament selection menggunakan ide dasar dari tournament dan akan menjalankan tournament sebanyak 2 kali
+     * Tournament selection menggunakan ide dasar dari tournament dan akan
+     * menjalankan tournament sebanyak 2 kali
      * untuk memilih parent 1 dan parent 2 dari masing masing jaura
      * 
      * @param population populasi sekarang
      * @return 2 individu pemenang turnamen
      */
-    public Individual[] tournamentSelection(Population population){
+    public Individual[] tournamentSelection(Population population) {
         Individual parent1 = this.tournament(population);
         Individual parent2 = this.tournament(population);
 
-        return new Individual[]{parent1, parent2};
+        return new Individual[] { parent1, parent2 };
     }
 
-
     /**
-     * Tournament selection menggunakan ide dasar dari tournament dan akan menjalankan tournament
+     * Tournament selection menggunakan ide dasar dari tournament dan akan
+     * menjalankan tournament
      * untuk memilih parent 1 dan parent 2 dari juara 1 dan juara 2 nya
      * 
      * @param population populasi
      * @return 2 individu teratas pemenang turnamen
      */
     // public Individual[] tournamentSelection(Population population) {
-    //     Individual top1 = null;
-    //     Individual top2 = null;
-    //     int populationSize = population.getPopulationSize();
+    // Individual top1 = null;
+    // Individual top2 = null;
+    // int populationSize = population.getPopulationSize();
 
-    //     int loop = (int) (populationSize * 0.002);
-    //     loop = Math.max(2, loop); // minimal 2 individu
+    // int loop = (int) (populationSize * 0.002);
+    // loop = Math.max(2, loop); // minimal 2 individu
 
-    //     // Menentukan ukuran turnamen (tournament size)
-    //     // loop = 16; // Sementara pakai 16
+    // // Menentukan ukuran turnamen (tournament size)
+    // // loop = 16; // Sementara pakai 16
 
-    //     // Loop untuk melakukan turney nya
-    //     for (int i = 0; i < loop; i++) {
-    //         int idx = MyRand.nextInt(populationSize);
-    //         Individual calon = population.getSpecificIndividual(idx);
+    // // Loop untuk melakukan turney nya
+    // for (int i = 0; i < loop; i++) {
+    // int idx = MyRand.nextInt(populationSize);
+    // Individual calon = population.getSpecificIndividual(idx);
 
-    //         // bandingin kandidat terbaik yang ada sejauh ini
-    //         if (top1 == null || calon.fitness > top1.fitness) {
-    //             if(top1 != null) top2 = top1;
-                
-    //             top1 = calon;
-    //         }
-    //         if(top2 == null && top1 != null && calon.fitness < top1.fitness){
-    //             top2 = calon;
-    //         }
-    //     }
-    //     return new Individual[]{top1, top2};
+    // // bandingin kandidat terbaik yang ada sejauh ini
+    // if (top1 == null || calon.fitness > top1.fitness) {
+    // if(top1 != null) top2 = top1;
+
+    // top1 = calon;
+    // }
+    // if(top2 == null && top1 != null && calon.fitness < top1.fitness){
+    // top2 = calon;
+    // }
+    // }
+    // return new Individual[]{top1, top2};
     // }
 
     /**

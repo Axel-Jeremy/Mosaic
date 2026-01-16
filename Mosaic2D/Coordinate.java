@@ -19,8 +19,8 @@ public class Coordinate {
     /**
      * konstruktor untuk membuat objek Coordinate
      *
-     * @param x Indeks Baris
-     * @param y Indeks Kolom
+     * @param x     Indeks Baris
+     * @param y     Indeks Kolom
      * @param value Nilai angka petunjuk pada posisi tersebut
      */
     public Coordinate(int x, int y, int value) {
@@ -31,6 +31,7 @@ public class Coordinate {
 
     /**
      * ambil posisi baris
+     * 
      * @return Indeks baris
      */
     public int getX() {
@@ -39,6 +40,7 @@ public class Coordinate {
 
     /**
      * atur posisi baris
+     * 
      * @return Indeks baris baru
      */
     public void setX(int x) {
@@ -47,6 +49,7 @@ public class Coordinate {
 
     /**
      * ambil posisi kolom
+     * 
      * @return Indeks kolom
      */
     public int getY() {
@@ -55,6 +58,7 @@ public class Coordinate {
 
     /**
      * atur posisi kolom
+     * 
      * @return Indeks kolom baru
      */
     public void setY(int y) {
@@ -63,6 +67,7 @@ public class Coordinate {
 
     /**
      * ambil nilai clue
+     * 
      * @return Indeks kolom
      */
     public int getValue() {
@@ -71,6 +76,7 @@ public class Coordinate {
 
     /**
      * atur nilai clue
+     * 
      * @return Indeks kolom baru
      */
     public void setValue(int value) {

@@ -2,28 +2,28 @@ package Mosaic2D;
 
 import java.util.Random;
 
-
 /**
- * Class MosaicGA bertindak sebagai penggerak utama dari algo GA ini, dimana akan mengatur siklus seleksi, crossover,
+ * Class MosaicGA bertindak sebagai penggerak utama dari algo GA ini, dimana
+ * akan mengatur siklus seleksi, crossover,
  * dan mutasi dari individu individu di algo GA ini
  * 
  * Sumber: ...
  * 
  * @author Axel, Davin, Keane
  */
-public class MosaicGA{
-    Random MyRand;                  // Angka Generator
-    private int n;                  // jumlah grid di papan nya n*n
+public class MosaicGA {
+    Random MyRand; // Angka Generator
+    private int n; // jumlah grid di papan nya n*n
     private Hyperparam parameter;
 
-/**
+    /**
      * Konstruktor untuk menginisialisasi parameter Algoritma Genetika.
      *
-     * @param MyRand Generator angka random
-     * @param n Ukuran grid
+     * @param MyRand    Generator angka random
+     * @param n         Ukuran grid
      * @param parameter list hyperparameter yang akan digunakan
      */
-public MosaicGA(Random MyRand, int n, Hyperparam parameter) {
+    public MosaicGA(Random MyRand, int n, Hyperparam parameter) {
         this.MyRand = MyRand;
         this.n = n;
         this.parameter = parameter;
@@ -55,20 +55,20 @@ public MosaicGA(Random MyRand, int n, Hyperparam parameter) {
 
                 // crossover?
                 if (this.MyRand.nextDouble() < parameter.getCrossoverRate()) {
-                     // jika ya, crossover kedua parent
+                    // jika ya, crossover kedua parent
                     Individual[] child = parents[0].doCrossover(parents[1]);
-                    
+
                     // Loop setiap anak yang baru masuk
                     for (int i = 0; i < child.length; i++) {
                         // apakah terjadi mutasi?
-                        if (this.MyRand.nextDouble() < parameter.getMutationRate()){ 
+                        if (this.MyRand.nextDouble() < parameter.getMutationRate()) {
                             child[i].doMutation();
                             // newPop.addIndividual(child[i]);
                             // System.out.println(this.mutationRate);
                         }
                         // System.out.println(i);
                     }
-                    // Loop setiap anak 
+                    // Loop setiap anak
                     for (int i = 0; i < child.length; i++) {
                         // masukkan anak ke dalam populasi
                         newPop.addIndividual(child[i]);

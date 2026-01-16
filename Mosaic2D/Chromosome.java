@@ -2,6 +2,7 @@ package Mosaic2D;
 
 import java.util.List;
 import java.util.Random;
+
 /**
  * Class Chromosome mempresentasikan struktur awal dari algo GA yang
  * mempresentasikan grid 2 dimensi
@@ -50,6 +51,7 @@ public class Chromosome {
     /**
      * Membalik nilai sel pada koordinat tertentu (Flip Bit)
      * Jika 0 menjadi 1 dan sebaliknya
+     * 
      * @param x Baris
      * @param y Kolom
      * @param n Ukuran sisi grid
@@ -114,12 +116,15 @@ public class Chromosome {
     }
 
     /**
-     * Melakukan mutasi untuk memperbaiki kromosom dengan membandingkan nilai pada angka dengan jumlah kotak hitam aktual.
-     * Jika tidak sesuai, maka akan membalik sel hitam di sekitar angka tersebut sampai sama dengan jumlah kotak hitam yang diharapkan
+     * Melakukan mutasi untuk memperbaiki kromosom dengan membandingkan nilai pada
+     * angka dengan jumlah kotak hitam aktual.
+     * Jika tidak sesuai, maka akan membalik sel hitam di sekitar angka tersebut
+     * sampai sama dengan jumlah kotak hitam yang diharapkan
      * 
      * @param numberLocation Daftar koordinat angka pada puzzle
-     * @param actual Array yang berisi jumlah kotak hitam aktual di sekitar setiap clue
-     * @param n Ukuran sisi grid
+     * @param actual         Array yang berisi jumlah kotak hitam aktual di sekitar
+     *                       setiap clue
+     * @param n              Ukuran sisi grid
      */
     public void randomAdjustmentMutation(List<Coordinate> numberLocation, int[] actual, int n) {
         setGene(this.mutation.randomAdjustment(this, numberLocation, actual, n));

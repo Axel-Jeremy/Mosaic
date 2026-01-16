@@ -13,11 +13,13 @@ SbX SbY Value (misal : 2 1 0)
 SbX SbY Value (misal : 2 4 1)
 */
 
-
 /**
- * Class main bertindak sebagai class utama untuk program Mosaic ini, Class main dimulai dari membaca file input
- * yang berisi ukuran grid dan lokasi angka. Kemudian menginisialisasi data kedalam individu dan membaca parameter GA yang digunakan
- * terkahir main akan menampilkan visualisasi berbasis CLI untuk solusi dan detail hasil apakah berhasil atau gagal
+ * Class main bertindak sebagai class utama untuk program Mosaic ini, Class main
+ * dimulai dari membaca file input
+ * yang berisi ukuran grid dan lokasi angka. Kemudian menginisialisasi data
+ * kedalam individu dan membaca parameter GA yang digunakan
+ * terkahir main akan menampilkan visualisasi berbasis CLI untuk solusi dan
+ * detail hasil apakah berhasil atau gagal
  * 
  * Sumber: ...
  * 
@@ -33,7 +35,8 @@ public class Main {
         Scanner sc;
         int m = 0; // banyak angka
         int n = 0; // Ukuran papan
-        // Try Catch untuk input File dan error prevention jika tidak ada file yang cocok
+        // Try Catch untuk input File dan error prevention jika tidak ada file yang
+        // cocok
         try {
             // ambil file dengan nama "input.txt"
             sc = new Scanner(new File("Mosaic2D/Inputs/20-Hard.txt"));
@@ -66,7 +69,7 @@ public class Main {
                 numberLocation.add(new Coordinate(x, y, value));
             }
 
-            // Set ke class individual 
+            // Set ke class individual
             Individual.setMap(mosaic);
             Individual.setNumberLocation(numberLocation);
 
@@ -92,16 +95,15 @@ public class Main {
             int totalGeneration = 0, maxPopulationSize = 0;
             double crossoverRate = 0.0, mutationRate = 0.0, elitismPct = 0.0;
 
-             // baca data parameter GA
+            // baca data parameter GA
             try {
                 sc = new Scanner(new File("Mosaic2D/param.txt"));
                 parameter = new Hyperparam(
-                sc.nextInt(), 
-                sc.nextInt(), 
-                sc.nextDouble(), 
-                sc.nextDouble(), 
-                sc.nextDouble()
-            );
+                        sc.nextInt(),
+                        sc.nextInt(),
+                        sc.nextDouble(),
+                        sc.nextDouble(),
+                        sc.nextDouble());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -124,8 +126,10 @@ public class Main {
                 bestState = current;
             }
 
-            if(ct == 5) top5 = bestFitness;
-            if(ct == 10) top10 = bestFitness;
+            if (ct == 5)
+                top5 = bestFitness;
+            if (ct == 10)
+                top10 = bestFitness;
         }
         // Print laporan hasil run algo
         System.out.println("\n========================================");
@@ -139,10 +143,9 @@ public class Main {
         System.out.println("========================================");
         if (bestFitness < 1) {
             bestState.printSavedErrors();
-        }
-        else{
-        System.out.println("========== 100% Jawaban Benar ==========");
-        System.out.println("========================================");
+        } else {
+            System.out.println("========== 100% Jawaban Benar ==========");
+            System.out.println("========================================");
         }
 
     }

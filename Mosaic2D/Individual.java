@@ -5,13 +5,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-
 /**
- * Class Individual mempresentasikan 1 individu atau solusi yang potensial dalam algo GA, Setiap individu
- * memiliki kromosom, dan nilai fitness, class ini bertanggung jawab untuk mengukut seberapa bagus suatu individu
+ * Class Individual mempresentasikan 1 individu atau solusi yang potensial dalam
+ * algo GA, Setiap individu
+ * memiliki kromosom, dan nilai fitness, class ini bertanggung jawab untuk
+ * mengukut seberapa bagus suatu individu
  * yang dimiliki dibandingkan dengan jawaban benarnya
  * 
- * Sumber: https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
+ * Sumber:
+ * https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
  * 
  * @author Axel, Davin, Keane
  * 
@@ -34,6 +36,7 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * Konstruktor untuk membuat Individu Acak untuk generasi awal
+     * 
      * @param MyRand Random generator
      */
     public Individual(Random MyRand) {
@@ -51,8 +54,9 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * Konstruktor untuk membuat Individu dari Kromosom yang sudah ada
-     * @param MyRand Random generator
-     * @param chromosome Kromosom 
+     * 
+     * @param MyRand     Random generator
+     * @param chromosome Kromosom
      */
     public Individual(Random MyRand, Chromosome chromosome) {
         this.MyRand = MyRand;
@@ -64,6 +68,7 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * Mengecek apakah koordinat (baris dan kolom) valid berada di dalam grid
+     * 
      * @param row Baris
      * @param col Kolom
      * @return true jika valid
@@ -75,7 +80,9 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * Mengambil nilai sel (Hitam/Putih) dari kromosom
-     * sumber : https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
+     * sumber :
+     * https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
+     * 
      * @param row Baris.
      * @param col Kolom.
      * @return 1 (Hitam) atau 0 (Putih).
@@ -84,7 +91,7 @@ public class Individual implements Comparable<Individual> {
         return chromosome.getCell(row, col);
     }
 
-     /**
+    /**
      * Menghitung nilai fitneess setiap individu
      * kami menggunakan soft penalty untuk error dan reward untuk jawaban benar
      * 
@@ -144,7 +151,8 @@ public class Individual implements Comparable<Individual> {
             i++;
         }
 
-        // Normalisasi error yang terjadi dengan menghitung jumlah maksimal possible error
+        // Normalisasi error yang terjadi dengan menghitung jumlah maksimal possible
+        // error
         int maxPossibleError = 0;
         for (Coordinate number : numberLocation) {
             // Asumsi error maksimal = jumlah tetangga
@@ -219,6 +227,7 @@ public class Individual implements Comparable<Individual> {
     // SETTER
     /**
      * atur map
+     * 
      * @param map pemetaan soal
      */
     public static void setMap(int[][] map) {
@@ -228,6 +237,7 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * atur posisi angka
+     * 
      * @param numberLocation koordinat yang memiliki angka
      */
     public static void setNumberLocation(List<Coordinate> numberLocation) {
@@ -244,7 +254,8 @@ public class Individual implements Comparable<Individual> {
     }
 
     /**
-     * membuat salinan dari individu untuk proses elistim agar tidak menimpa yangg sudah ada
+     * membuat salinan dari individu untuk proses elistim agar tidak menimpa yangg
+     * sudah ada
      */
     @Override
     public Individual clone() {
@@ -275,9 +286,9 @@ public class Individual implements Comparable<Individual> {
         return this.chromosome.toString();
     }
 
-
     /**
-     * print hasil jawaban apakah benar (berhasil ditemukan) atau salah (tidak ditemukan)
+     * print hasil jawaban apakah benar (berhasil ditemukan) atau salah (tidak
+     * ditemukan)
      */
     public void printSavedErrors() {
         System.out.println("============ JAWABAN SALAH =============");
@@ -289,15 +300,15 @@ public class Individual implements Comparable<Individual> {
         }
 
         int j = 1;
-        // Loop untuk mencari nilai actual dan expected 
+        // Loop untuk mencari nilai actual dan expected
         for (int i = 0; i < numberLocation.size(); i++) {
             // Ambil nilai yang disimpan pas setFitness
             int actual = this.actualValues[i];
             int expected = numberLocation.get(i).getValue();
-            
+
             if (actual != expected) {
                 Coordinate c = numberLocation.get(i);
-                
+
                 System.out.printf("%d. Expected : %d, Actual : %d at [%d, %d]\n",
                         j++, expected, actual, (c.getX() + 1), (c.getY() + 1));
             }
