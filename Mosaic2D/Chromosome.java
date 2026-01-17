@@ -131,6 +131,21 @@ public class Chromosome {
     }
 
     /**
+     * mutasi dengan flip seluruh bit dengan index genap
+     */
+    public void evenFlipBitMutation() {
+        setGene(this.mutation.evenFlipBitMutation(this));
+    }
+
+
+    /**
+     * mutasi dengan flip seluruh bit dengan index ganjil
+     */
+    public void oddFlipBitMutation() {
+        setGene(this.mutation.oddFlipBitMutation(this));
+    }
+
+    /**
      * Melakukan Uniform Crossover
      * Setiap gen anak akan dipilih secara acak dari salah satu orang tua
      *
@@ -161,6 +176,34 @@ public class Chromosome {
      */
     public Chromosome[] twoPointCrossover(Chromosome other) {
         return crossover.twoPointCrossover(this, other);
+    }
+
+    public Chromosome[] verticalCrossover(Chromosome other) {
+        return crossover.verticalCrossover(this, other);
+    }
+
+    public Chromosome[] horizontalCrossover(Chromosome other) {
+        return crossover.horizontalCrossover(this, other);
+    }
+
+    public Chromosome[] rightDiagonalCrossover(Chromosome other) {
+        return crossover.rightDiagonalCrossover(this, other);
+    }
+
+    public Chromosome[] leftDiagonalCrossover(Chromosome other) {
+        return crossover.leftDiagonalCrossover(this, other);
+    }
+
+    public Chromosome[] doubleDiagonalCrossover(Chromosome other) {
+        return crossover.doubleDiagonalCrossover(this, other);
+    }
+
+    public Chromosome[] centerPointPlusCrossover(Chromosome other) {
+        return crossover.centerPointPlusCrossover(this, other);
+    }
+
+    public Chromosome[] randomCenterPointPlusCrossover(Chromosome other) {
+        return crossover.randomPointPlusCrossover(this, other);
     }
 
     /**
