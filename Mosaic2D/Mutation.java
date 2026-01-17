@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. mutasi
- * ini berfungsi untuk
+ * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. 
+ * mutasi ini berfungsi untuk
  * menjaga kerandoman dari populasi dan mencegah terjebak di local maksimum..5f
  * 
  * Metode mutasi:
@@ -156,5 +156,49 @@ public class Mutation {
             k++;
         }
         return current.getGene();
+    }
+
+    /**
+     * balik semua bit index genap (index pertama adalah 1)
+     * dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
+    public int[][] evenFlipBitMutation(Chromosome current) {
+        int[][] currentGene = current.getGene();
+        int n = currentGene.length;
+        int count = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (count % 2 == 0)
+                    currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+            }
+        }
+
+        return currentGene;
+    }
+
+    /**
+     * balik semua bit index ganjil (index pertama adalah 1)
+     * dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
+    public int[][] oddFlipBitMutation(Chromosome current) {
+        int[][] currentGene = current.getGene();
+        int n = currentGene.length;
+        int count = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (count % 2 == 1)
+                    currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+            }
+        }
+
+        return currentGene;
     }
 }
