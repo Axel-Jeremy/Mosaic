@@ -14,7 +14,6 @@ import java.util.Random;
  * 
  * Sumber:
  * Sendiri dengan bantuan LLM untuk debugging
- * https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
  * 
  * @author Axel, Davin, Keane
  * 
@@ -27,9 +26,8 @@ public class Individual implements Comparable<Individual> {
     public double parentProbability; // probabilitas individu ini terpilih sbg parent
     static int[][] map; // Peta soal dari input
     static List<Coordinate> numberLocation; // grid yang memiliki angka
-    // Tambahkan variabel ini di bagian atas class Individual
-    public int[] actualValues; // Array untuk menyimpan "Jawaban saat ini"
-    public List<Coordinate> wrongNumber = new ArrayList<>(); // List untuk menyimpan koordinat yang salah
+    public int[] actualValues; // Array untuk menyimpan jawaban sekarang
+    public List<Coordinate> wrongNumber = new ArrayList<>(); // List buat nyimpen koordinat yang salah
 
     // Represntasi kotak
     private static final int FILLED = 1;
@@ -75,14 +73,12 @@ public class Individual implements Comparable<Individual> {
      * @return true jika valid
      */
     static boolean isValid(int row, int col) {
-        return row >= 0 && row < map.length &&
-                col >= 0 && col < map[0].length;
+        return row >= 0 && row < n &&
+                col >= 0 && col < n;
     }
 
     /**
      * Mengambil nilai sel (Hitam/Putih) dari kromosom
-     * sumber :
-     * https://stackoverflow.com/questions/19320183/1d-array-to-2d-array-mapping
      * 
      * @param row Baris.
      * @param col Kolom.
@@ -101,38 +97,20 @@ public class Individual implements Comparable<Individual> {
      * rumus akhir: this.fitness = (base + reward) / 2.0;
      */
     public void setFitness() {
-        // ================================================================
-        // eksperimen fitness pertama, menghitung banyak kotak yang salah
-        // ================================================================
-        // int totalError = 0;
-        // for (Coordinate c : numberLocation) {
-        // int x = c.getX();
-        // int y = c.getY();
-        // int value = c.getValue();
-
-        // int blackCtn = countBlackCell(x, y);
-
-        // totalError += Math.abs(blackCtn - value);
-        // }
-        // this.fitness = 1.0 / (1 + totalError);
-
-        // ================================================================
-        // eksperimen fitness 2,
-        // ================================================================
-        int totalError = 0;
-        int correctClues = 0;
-        // int maxBlack = 9;
+        int totalError = 0; // total kesalahan 1 map (selisih expected - actual)
+        int correctClues = 0; // berapa banyak angka clue yang sudah memiliki kotak hitam sesuai dengan
+                              // angkanya
 
         // Array untuk menyimpan hasil itungan
         if (this.actualValues == null || this.actualValues.length != numberLocation.size()) {
             this.actualValues = new int[numberLocation.size()];
         }
 
-        // Hapus semua yang salah
+        // Reset
         this.wrongNumber.clear();
 
         int i = 0;
-        // Loop untuk menhitung jumlah salah
+        // Loop untuk menghitung jumlah salah
         for (Coordinate c : numberLocation) {
             // Itung kotak item yang ada di sekitar target berdasarkan kromosom saat ini
             int black = countBlackCell(c.getX(), c.getY());
@@ -207,9 +185,16 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * Melakukan crossover dengan metode:
-     * 1. Single point
-     * 2. Two Point
-     * 3. Uniform
+     * 1. Uniform Crossover
+     * 2. Single Point crossover
+     * 3. Two point crossover
+     * 4. Horizontal Crossover
+     * 5. Vertical Crossover
+     * 6. Right Diagonal Crossover
+     * 7. Left Diagonal Crossover
+     * 8. Center Point Plus Crossover
+     * 9. Random Point Plus Crossover
+     * 10.Double Diagonal Crossover
      * 
      * @param other Individu parent
      * @return array berisikan 2 anak
@@ -247,6 +232,12 @@ public class Individual implements Comparable<Individual> {
 
     /**
      * melakukan mutasi pada kromosom di individu dengan rate mutasi sesuai input
+     * * Metode mutasi:
+     * 1. One bit flip (flip hanya 1 bit acak)
+     * 2. Flip all bit (Flip seluruh bit)
+     * 3. Probabilistic Bit (Flip bit sesuai dengan suatu peluang)
+     * 4. Even Flip Bit (flip hanya indeks genap)
+     * 5. Odd Flip Bit (flip hanya indeks ganjil)
      */
     public void doMutation() {
         // this.chromosome.probabilityFlipBitMutation(0.5);
@@ -255,8 +246,8 @@ public class Individual implements Comparable<Individual> {
     }
 
     /**
-     * membuat salinan dari individu untuk proses elistim agar tidak menimpa yangg
-     * sudah ada
+     * membuat salinan dari individu untuk proses elistim 
+     * agar tidak menimpa yang sudah ada
      */
     @Override
     public Individual clone() {

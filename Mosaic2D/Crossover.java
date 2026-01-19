@@ -4,8 +4,7 @@ import java.util.Random;
 
 /**
  * Class crossover bertugas untuk melakukan kombinasi dari 2 parent yang
- * sbeleumnya terpilih
- * yang akan menghasilkan anak nantinya
+ * sebelumnya terpilih yang akan menghasilkan anak nantinya
  * 
  * Metode:
  * 1. Uniform Crossover
@@ -17,15 +16,15 @@ import java.util.Random;
  * 7. Left Diagonal Crossover
  * 8. Center Point Plus Crossover
  * 9. Random Point Plus Crossover
- * 10. Double Diagonal Crossover
+ * 10.Double Diagonal Crossover
  * 
- * Sumber: Sendiri dengan refrensi Tugas Fire Station dan debugging LLM
+ * Sumber: Mandiri dengan referensi Tugas Fire Station untuk unform, single, dan two point
  * 
  * @author Axel, Davin, Keane
  * 
  */
 public class Crossover {
-    Random MyRand;
+    Random MyRand; //random generator
 
     /**
      * Konstraktor untuk crossover
@@ -123,8 +122,8 @@ public class Crossover {
     }
 
     /**
-     * Memotong grid secara vertikal (kolom), dimana bagian kiri akan menjadi 
-     * parent 1 dan yang kanan akan menjadi parent 2
+     * Melakukan Vertical Crossover dengan memilih 1 titik potong berbentuk garis vertical,
+     * lalu menukar segmen di antara bagian kiri dan bagian kanan dari titik tersebut
      * 
      * @param current Parent pertama
      * @param other Parent kedua
@@ -132,7 +131,6 @@ public class Crossover {
      */
     public Chromosome[] verticalCrossover(Chromosome current, Chromosome other) {
         // Tentukan titik potong
-        // int potongan = this.gene.length / 2;
         int[][] currentGene = current.getGene();
         int[][] otherGene = other.getGene();
 
@@ -175,8 +173,8 @@ public class Crossover {
     }
 
     /**
-     * Memotong grid secara horizontal (baris), dimana bagian kiri akan menjadi 
-     * parent 1 dan yang kanan akan menjadi parent 2
+     * Memotong grid secara horizontal (baris), dimana bagian atas akan menjadi 
+     * parent 1 dan yang bawah akan menjadi parent 2
      * 
      * @param current Parent pertama
      * @param other Parent kedua

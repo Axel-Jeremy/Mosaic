@@ -7,14 +7,17 @@ import java.util.Random;
  * akan mengatur siklus seleksi, crossover,
  * dan mutasi dari individu individu di algo GA ini
  * 
- * Sumber: Sendiri dengan landasan Tugas Fire Station dan dengan bantuan debug LLM
+ * Sumber: Sendiri dengan landasan Tugas Fire Station
+ * dan dengan bantuan debug LLM dan referensi file knapsack di Teams
  * 
  * @author Axel, Davin, Keane
  */
 public class MosaicGA {
     Random MyRand; // Angka Generator
     private int n; // jumlah grid di papan nya n*n
-    private Hyperparam parameter;
+    private Hyperparam parameter; //object untuk menyimpan seluruh parameter 
+                                // pada param.txt (generasi, populasi, crossover rate, 
+                                // mutation rate, elitism rate)
 
     /**
      * Konstruktor untuk menginisialisasi parameter Algoritma Genetika.

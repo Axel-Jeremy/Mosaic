@@ -6,7 +6,7 @@ package Mosaic2D;
  * dan angka pada titik itu yang menunjukan berapa banyak kotak hitam yang harus
  * ada di sekitarnya termasukdi titik tersebut
  * 
- * Sumber: Sendiri dengan refrensi Tugas Fire Station
+ * Sumber: Sendiri dengan referensi Tugas Fire Station
  * @author Axel
  * 
  */
@@ -101,7 +101,7 @@ public class Coordinate {
                 // Kasus Pojok Kiri-Atas, Kanan-Atas, Kiri-Bawah, Kanan-Bawah
                 return 4;
             else
-                // Kasus pinggir Atas atau Bawah (bukan pojok)
+                // Kasus tepi Atas atau Bawah (bukan pojok)
                 return 6;
         else if (this.y == 0 || this.y == n)
             // Kasus Tepi kiri atau kanan (tapi bukan pojok)

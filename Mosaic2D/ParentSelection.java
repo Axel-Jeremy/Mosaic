@@ -13,13 +13,15 @@ import java.util.Random;
  * 2. Roulete Wheel
  * 3. Rank selection
  * 
- * Sumber: Tugas Fire Station yang dimodifikasi dengan bantuan debug LLM
+ * Sumber: 
+ *       - Tugas Fire Station yang dimodifikasi dengan bantuan debug LLM
+ *       - https://stackoverflow.com/questions/177271/roulette-selection-in-genetic-algorithms
  * 
  * @author Axel, Davin, Keane
  * 
  */
 public class ParentSelection {
-    Random MyRand;
+    Random MyRand; //random generator
 
     /**
      * Konstraktor parentSelection
@@ -85,7 +87,7 @@ public class ParentSelection {
     /**
      * Melakukan seleksi individu menggunakan metode Tournament Selection.
      * Cara kerja: Memilih kandidat secara acak sebanyak tournament akan dilakukan,
-     * lalu mengambil yang terbaik (kami pakai roubd of 16)
+     * lalu mengambil yang terbaik (kami pakai round of 16)
      *
      * @param population populasi sekarang
      * @return 1 individu pemenang turnamen
@@ -98,7 +100,7 @@ public class ParentSelection {
         loop = Math.max(2, loop); // minimal 2 individu
 
         // Menentukan ukuran turnamen (tournament size)
-        loop = 16; // Sementara pakai 16
+        loop = 16; //pakai 16
 
         // Loop untuk melakukan turney nya
         for (int i = 0; i < loop; i++) {
@@ -133,25 +135,26 @@ public class ParentSelection {
         }
         // System.out.println(sumfitness);
 
-        // itung probabilitasnya
+        // itung probabilitas setiap individu di satu populasi untuk jadi parent
         for (int i = 0; i < populationSize; i++) {
             ((Individual) population.getSpecificIndividual(i)).parentProbability = 1
                     - ((1.0 * population.getSpecificIndividual(i).fitness) / sumfitness);
         }
 
-        // Kode untuk roulette
+        // kode untuk roulette
         // putar roda roulette untuk memilih 2 parent
         for (int n = 0; n < 2; n++) {
             int i = -1;
             double prob = this.MyRand.nextDouble();
             double sum = 0.0;
 
-            // cari individu yang range probabilitasnya terkena random
+            // cari individu pertama yang kumulatif parent probabilitynya lebih tinggi dari probability random
             do {
                 i++;
+                 //itung parentprobability kumulatif
                 sum = sum + population.getSpecificIndividual(i).parentProbability;
-            } while (sum < prob);
-            parents[n] = population.getSpecificIndividual(i);
+            } while (sum < prob); // putar roda roulette selama probability kumulatif < probability random 
+            parents[n] = population.getSpecificIndividual(i); //ambil individu terakhir yang membuat kumulatif >= prob 
         }
         return parents;
     }
@@ -171,19 +174,19 @@ public class ParentSelection {
         // sort populasi berdasarkan fitnessnya (terbaik = index 0)
         Collections.sort(populations);
 
-        // tetapkan probabilitas berdasarkan Peringkat (Rank).
-        // individu terbaik (index 0) mendapat peringkat N.
-        // individu terburuk (index N-1) mendapat peringkat 1.
-        // Pengaman jika sumRank tidak terinisialisasi
+        
+        // hitung kumulatif rank di satu populasi jika sumRanknya masih 0 (jaga-jaga)
         if (population.sumRank == 0) {
             for (int i = 1; i <= N; i++)
                 population.sumRank += i;
         }
 
-        // set probabilitas berdasarkan rank yang didapat
+        // tentukan probabilitas berdasarkan rank
+        // individu terbaik (index 0) mendapat rank N
+        // individu terburuk (index N-1) mendapat rank 1
+        // makin tinggi rank individu = probability parent makin tinggi
         for (int i = 0; i < N; i++) {
-            // i = 0 adalah yang terbaik, i = N-1 adalah yang terburuk.
-            int rank = N - i; // Peringkat terbalik (terbaik = N, terburuk = 1)
+            int rank = N - i;
             population.getSpecificIndividual(i).parentProbability = (double) rank / population.sumRank;
         }
 
@@ -196,14 +199,14 @@ public class ParentSelection {
 
             // loop untuk menemukan parent berdasarkan prob
             while (i < N - 1) { // berhenti di N-1 untuk menghindari out of bounds
+                //itung parentprobability kumulatif
                 cumulativeSum += population.getSpecificIndividual(i).parentProbability;
                 if (cumulativeSum >= prob) {
                     break;
                 }
                 i++;
             }
-            // Jika loop selesai (karena prob sangat tinggi atau error floating point),
-            // pilih individu terakhir (i akan bernilai N-1).
+            //ambil individu terakhir yang membuat kumulatif >= prob 
             parents[n] = population.getSpecificIndividual(i);
         }
         return parents;

@@ -1,0 +1,25 @@
+1. Buka folder Mosaic2D
+2. Buka command prompt, change directory hingga Mosaic2D
+3. javac *.java
+4. change directory ke parent folder (cd ..)
+4. java Mosaic2D/Main 10 (isi 10 dengan banyak iterasi GA)
+
+!!!!!!!!!!!!!!!!!!!!!!
+*Perhatikan di kelas Main terdapat array fileList yang 
+berisi 10 String nama file, array ini digunakan untuk menjalankan seluruh 
+input dari suatu ukuran (ganti angka pertama sesuai dengan ukuran puzzle yang tersedia, dapat dilihat di folder Mosaic2D/Inputs)
+
+*Ubah hyperparameter seperti generasi, populasi, crossover rate, mutation rate, dan elitism rate
+di param.txt
+
+*Ubah metode mutation dan crossover di file Individu.java, 
+pada method line 202 public Individual[] doCrossover(Individual other) untuk crossover, 
+ubah Chromosome[] child = this.chromosome.<metodeCrossover>;
+
+dan method line 242 public void doMutation() untuk mutation, 
+ubah menjadi this.mutation.<namaMetodeMutasi>
+
+*Ubah metode parent selection di file Population.java, 
+pada method line 178 public Individual[] selectParents(), 
+ubah menjadi parentSelection.<namaMetodeParentSelection>(this)
+!!!!!!!!!!!!!!!!!!!!!!

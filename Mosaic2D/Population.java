@@ -6,24 +6,22 @@ import java.util.Random;
 
 /**
  * Class population mempresentasikan kumpulan dari individu dalam GA, dimana
- * class ini bertanggung jawab untuk
- * mengelola pemilihan orang tua, elitism, dan siklus dari seluruh individu di
- * algoritma ini
+ * class ini bertanggung jawab untuk mengelola pemilihan orang tua, elitism, 
+ * dan siklus dari seluruh individu di algoritma ini
  * 
- * Sumber: Tugas Fire Station yang dimodifikasi dengan bantuan debug LLM
+ * Sumber: Tugas Fire Station
  * 
  * @author Axel, Davin, Keane
  * 
  */
 public class Population {
-    public ArrayList<Individual> population;
-    private int maxPopulationSize;
-    private int populationSize = 0;
-    public double elitismPct;
-    int sumRank = 0;
-    Random MyRand;
-    static int[][] map;
-    private ParentSelection parentSelection;
+    public ArrayList<Individual> population; //list individu di populasi ini
+    private int maxPopulationSize; //ukuran populasi maksimal (ditentuin lewat param.txt)
+    private int populationSize = 0; //ukuran populasi saat ini
+    public double elitismPct; //persentasi, peluang mutasi
+    int sumRank = 0; //total rank
+    Random MyRand; //random generator
+    private ParentSelection parentSelection; //objek parent selection untuk 
 
     /**
      * Konstraktor untuk membuat populasi baru
@@ -39,8 +37,6 @@ public class Population {
         this.maxPopulationSize = maxPopulationSize;
         this.population = new ArrayList<Individual>();
         this.elitismPct = elitismPct;
-        // this.maxCapacity = maxCapacity;
-
         this.parentSelection = new ParentSelection(MyRand);
 
         // Menghitung jumlah rank untuk rank selection

@@ -5,17 +5,17 @@ package Mosaic2D;
  * training
  * class ini akan mengatur mutasi, ukuran generasi, dll.
  * 
- * Sumber : Sendiri dengan refrensi Tugas Fire Station
+ * Sumber : Sendiri
  * 
- * @author Axel, Keane
+ * @author Axel
  * 
  */
 public class Hyperparam {
-    int totalGeneration;
-    int maxPopulationSize;
-    double crossoverRate; // skala 0-1
-    double mutationRate; // skala 0-1
-    double elitismPct;
+    int totalGeneration; //Jumlah maksimal generasi
+    int maxPopulationSize; //Jumlah individu dalam populasi
+    double crossoverRate; // Peluang crossover skala 0-1
+    double mutationRate; // Peluang mutasi skala 0-1
+    double elitismPct; // Peluang elitism skala 0-1
 
     /**
      * Konstruktor Hyperparam

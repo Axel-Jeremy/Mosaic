@@ -6,22 +6,24 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. mutasi
- * ini berfungsi untuk
- * menjaga kerandoman dari populasi dan mencegah terjebak di local maksimum..5f
+ * Class Mutation berperan untuk terjadinya mutasi acak pada kromosom. 
+ * mutasi ini berfungsi untuk
+ * menjaga kerandoman dari populasi dan mencegah terjebak di local maksimum
  * 
  * Metode mutasi:
  * 1. One bit flip (flip hanya 1 bit acak)
  * 2. Flip all bit (Flip seluruh bit)
  * 3. Probabilistic Bit (Flip bit sesuai dengan suatu peluang)
+ * 4. Even Flip Bit (flip hanya indeks genap)
+ * 5. Odd Flip Bit (flip hanya indeks ganjil)
  * 
- * Sumber: Tugas Fire Station yang dimodifikasi
+ * Sumber: Mandiri
  * 
  * @author Axel, Davin, Keane
  * 
  */
 public class Mutation {
-    Random MyRand;
+    Random MyRand; //random generator
 
     /**
      * Konstraktor untuk mutation
@@ -61,7 +63,7 @@ public class Mutation {
 
         for (int i = 0; i < currentGene.length; i++) {
             for (int j = 0; j < currentGene[i].length; j++) {
-                currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+                currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0; 
             }
         }
         return currentGene;
@@ -92,7 +94,7 @@ public class Mutation {
      * angka dengan jumlah kotak hitam aktual.
      * Jika tidak sesuai, maka akan membalik sel hitam di sekitar angka tersebut
      * sampai sama dengan jumlah kotak hitam yang diharapkan
-     * 
+     * @param current Chromosome yang dimutasi
      * @param numberLocation Daftar koordinat angka pada puzzle
      * @param actual         Array yang berisi jumlah kotak hitam aktual di sekitar
      *                       setiap clue
@@ -106,19 +108,19 @@ public class Mutation {
 
             // Jika ada selisih maka jalankan
             if (c.getValue() != actual[k]) {
-                int selisih = Math.abs(c.getValue() - actual[k]);
-                int x = c.getX();
-                int y = c.getY();
+                int selisih = Math.abs(c.getValue() - actual[k]); //hitung selisih expected dan actual
+                int x = c.getX(); //simpan baris
+                int y = c.getY(); //simpan kolom
                 int count = 0;
 
-                List<Integer[]> indexes = new ArrayList<>();
+                List<Integer[]> indexes = new ArrayList<>(); //buat simpen semua index clues yang blm bener
 
                 // loop 3*3 untuk mengecek kotak hitam sekitar yang tidak keluar dari grid
                 for (int i = x - 1; i < x + 2; i++) {
                     for (int j = y - 1; j < y + 2; j++) {
                         // memastikan tetap valid (tidak keluar dari grid)
                         if (i >= 0 && i < n && j >= 0 && j < n) {
-                            indexes.add(new Integer[] { i, j });
+                            indexes.add(new Integer[] { i, j }); //simpen index (baris,kolom)
                         }
 
                     }
@@ -156,5 +158,49 @@ public class Mutation {
             k++;
         }
         return current.getGene();
+    }
+
+    /**
+     * balik semua bit index genap (index pertama adalah 1)
+     * dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
+    public int[][] evenFlipBitMutation(Chromosome current) {
+        int[][] currentGene = current.getGene();
+        int n = currentGene.length;
+        int count = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (count % 2 == 0) //kalo indeks genap
+                    currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+            }
+        }
+
+        return currentGene;
+    }
+
+    /**
+     * balik semua bit index ganjil (index pertama adalah 1)
+     * dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
+    public int[][] oddFlipBitMutation(Chromosome current) {
+        int[][] currentGene = current.getGene();
+        int n = currentGene.length;
+        int count = 1;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (count % 2 == 1) //kalo index ganjil
+                    currentGene[i][j] = (currentGene[i][j] == 0) ? 1 : 0;
+            }
+        }
+
+        return currentGene;
     }
 }

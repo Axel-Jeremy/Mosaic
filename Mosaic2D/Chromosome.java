@@ -9,19 +9,19 @@ import java.util.Random;
  * yang setiap gen nya akan bernilai 1 jika dia merupakan kotak hitam dan 0 jika
  * putih/kosong
  * 
- * Sumber: Membuat sendiri dengan bantuan LLM
+ * Sumber: Membuat sendiri
  * 
  * @author Axel, Davin, Keane
  * 
  */
 public class Chromosome {
-    private int[][] gene;
+    private int[][] gene; // encoding 2 dimensi bit string
     public Random MyRand; // random generator
     private static final int FILLED = 1; // penanda grid ditandai kotak hitam
     private static final int EMPTY = 0; // penanda grid ditandai kotak putih
     private static final int BOUND = 2; // batas untuk random
-    private Crossover crossover;
-    private Mutation mutation;
+    private Crossover crossover; //object melakukan seluruh metode crossover
+    private Mutation mutation; //object melakukan seluruh metode crossover
 
     /**
      * Konstraktor untuk chromosome
@@ -29,7 +29,6 @@ public class Chromosome {
      * @param MyRand Generator untuk angka acak
      */
     public Chromosome(Random MyRand) {
-        // this.gene = gene;
         this.MyRand = MyRand;
         this.crossover = new Crossover(MyRand);
         this.mutation = new Mutation(MyRand);
@@ -131,6 +130,29 @@ public class Chromosome {
     }
 
     /**
+     * balik semua bit index genap (index pertama adalah 1)
+     * dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
+    public void evenFlipBitMutation() {
+        setGene(this.mutation.evenFlipBitMutation(this));
+    }
+
+
+    /**
+     * balik semua bit index ganjil (index pertama adalah 1)
+     * dari kromosom (item jadi putih atau sebaliknya)
+     *
+     * @param current Chromosome yang dimutasi
+     * @return Array gen baru hasil mutasi
+     */
+    public void oddFlipBitMutation() {
+        setGene(this.mutation.oddFlipBitMutation(this));
+    }
+
+    /**
      * Melakukan Uniform Crossover
      * Setiap gen anak akan dipilih secara acak dari salah satu orang tua
      *
@@ -164,6 +186,93 @@ public class Chromosome {
     }
 
     /**
+     * Melakukan Vertical Crossover dengan memilih 1 titik potong berbentuk garis vertical,
+     * lalu menukar segmen di antara bagian kiri dan bagian kanan dari titik tersebut
+     *
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] verticalCrossover(Chromosome other) {
+        return crossover.verticalCrossover(this, other);
+    }
+
+    /**
+     * Melakukan Horizontal Crossover dengan memilih 1 titik potong berbentuk garis horizontal,
+     * lalu menukar segmen di antara bagian bawah dan bagian atas dari titik tersebut
+     *
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] horizontalCrossover(Chromosome other) {
+        return crossover.horizontalCrossover(this, other);
+    }
+
+    /**
+     * Melakukan Right Diagonal Crossover dengan memilih 1 titik potong berbentuk garis miring dari ujung kiri atas ke ujung kanan bawah,
+     * lalu menukar segmen di antara bagian kiri dan bagian kanan dari titik tersebut
+     *
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] rightDiagonalCrossover(Chromosome other) {
+        return crossover.rightDiagonalCrossover(this, other);
+    }
+
+    /**
+     * Melakukan Left Diagonal Crossover dengan memilih 1 titik potong berbentuk garis miring dari ujung kiri atas ke ujung kanan bawah,
+     * lalu menukar segmen di antara bagian kiri dan bagian kanan dari titik tersebut
+     *
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] leftDiagonalCrossover(Chromosome other) {
+        return crossover.leftDiagonalCrossover(this, other);
+    }
+
+    /**
+     * melakukan diagobal crossover tapi bentuk x dengan membagi grid jadi 2 garis menyilang seperti bentuk x
+     * Anak 1: Segitiga atas bawah parent 1 dan Segitiga kanan dan kiri parent 2
+     * Anak 2: Segitiga atas bawah parent 2 dan Segitiga kanan dan kiri parent 1
+     * 
+     * Ilustrasi: 
+     * .\../.
+     * ..\/..
+     * ../\..
+     * ./..\.
+     * 
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] doubleDiagonalCrossover(Chromosome other) {
+        return crossover.doubleDiagonalCrossover(this, other);
+    }
+
+    /**
+     * Melakukan pembagian seperti kuadran 
+     *  2 1
+     *  3 4
+     * Anak 1 : kuadran 2 dan 4 dari parent 1, kuadran 1 dan 3 dari parent 2
+     * Anak 2 : kuadran 2 dan 4 dari parent 2, kuadran 1 dan 3 dari parent 1
+     * 
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] centerPointPlusCrossover(Chromosome other) {
+        return crossover.centerPointPlusCrossover(this, other);
+    }
+
+    /**
+     * Melakukan quadrant crossover dengan titik random, pada dasarnya bakal mirip dengan
+     * center point crossover tapi titik temu antar 2 garisnya random
+     * 
+     * @param other Parent kedua
+     * @return Array berisi 2 Chromosome anak
+     */
+    public Chromosome[] randomCenterPointPlusCrossover(Chromosome other) {
+        return crossover.randomPointPlusCrossover(this, other);
+    }
+
+    /**
      * Representasi String dari Chromosome untuk visualisasi
      * Mengubah 1 menjadi "B" (Black) dan 0 menjadi "W" (White)
      *
@@ -176,9 +285,9 @@ public class Chromosome {
         for (int i = 0; i < gene.length; i++) {
             for (int j = 0; j < gene[i].length; j++) {
                 if (gene[i][j] == 1)
-                    res += "B ";
+                    res += "B "; //B = black
                 else
-                    res += "W ";
+                    res += "W "; //W = white
             }
             res += "\n";
         }
